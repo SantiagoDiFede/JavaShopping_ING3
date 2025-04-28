@@ -8,6 +8,7 @@ CREATE TABLE `Customer` (
                             PRIMARY KEY (
                                          `CustomerID`
                                 )
+                            CONSTRAINT U_Mail UNIQUE (Mail)
 );
 
 CREATE TABLE `Admin` (
@@ -39,13 +40,10 @@ CREATE TABLE `OrderLine` (
                                  )
 );
 
--- Table documentation comment 1 (try the PDF/RTF export)
--- Table documentation comment 2
+
 CREATE TABLE `Product` (
                            `ProductID` int  NOT NULL ,
-    -- Field documentation comment 1
-    -- Field documentation comment 2
-    -- Field documentation comment 3
+
                            `Name` varchar(200)  NOT NULL ,
                            `Price` money  NOT NULL ,
                            `SalePrice` money  NOT NULL ,
