@@ -1,95 +1,55 @@
-CREATE TABLE `Customer` (
-                            `CustomerID` int  NOT NULL ,
-                            `Login` String  NOT NULL ,
-                            `Password` varchar(200)  NOT NULL ,
-                            `FirstName` string  NOT NULL ,
-                            `LastName` string  NOT NULL ,
-                            `Mail` string  NOT NULL ,
+CREATE TABLE `Utilisateur` (
+                               `UtilisateurID` int  NOT NULL ,
+                               `Login` varchar(50)  NOT NULL ,
+                               `Password` varchar(200)  NOT NULL ,
+                               `Name` varchar(50)  NOT NULL ,
+                               `Mail` varchar(100)  NOT NULL ,
+                               `isAdmin` bool  NOT NULL ,
+                               PRIMARY KEY (
+                                            `UtilisateurID`
+                                   )
+);
+
+CREATE TABLE `Commande` (
+                            `CommandeID` int  NOT NULL ,
+                            `UtilisateurID` int  NOT NULL ,
+                            `Total` double  ,
+                            `StatutCommande` varchar(20)  NOT NULL ,
                             PRIMARY KEY (
-                                         `CustomerID`
+                                         `CommandeID`
                                 )
-                            CONSTRAINT U_Mail UNIQUE (Mail)
 );
 
-CREATE TABLE `Admin` (
-                         `AdminID` int  NOT NULL ,
-                         `Login` String  NOT NULL ,
-                         `Password` varchar(200)  NOT NULL ,
-                         PRIMARY KEY (
-                                      `AdminID`
-                             )
+CREATE TABLE `CommandeLigne` (
+                                 `CommandeLigneID` int  NOT NULL ,
+                                 `CommandeID` int  NOT NULL ,
+                                 `ProduitID` int  NOT NULL ,
+                                 `Qte` int  NOT NULL ,
+                                 PRIMARY KEY (
+                                              `CommandeLigneID`
+                                     )
 );
 
-CREATE TABLE `Order` (
-                         `OrderID` int  NOT NULL ,
-                         `CustomerID` int  NOT NULL ,
-                         `TotalAmount` money  NOT NULL ,
-                         `OrderStatusID` int  NOT NULL ,
-                         PRIMARY KEY (
-                                      `OrderID`
-                             )
+CREATE TABLE `Produit` (
+                           `ProduitID` int  NOT NULL ,
+                           `Nom` varchar(200)  NOT NULL ,
+                           `Prix` double  NOT NULL ,
+                           `RabaisPrix` double  ,
+                           `Image` varchar(1000)  NOT NULL ,
+                           PRIMARY KEY (
+                                        `ProduitID`
+                               ),
+                           CONSTRAINT `uc_Produit_Nom` UNIQUE (
+                                                               `Nom`
+                               )
 );
 
-CREATE TABLE `OrderLine` (
-                             `OrderLineID` int  NOT NULL ,
-                             `OrderID` int  NOT NULL ,
-                             `ProductID` int  NOT NULL ,
-                             `Quantity` int  NOT NULL ,
-                             PRIMARY KEY (
-                                          `OrderLineID`
-                                 )
-);
+ALTER TABLE `Commande` ADD CONSTRAINT `fk_Commande_UtilisateurID` FOREIGN KEY(`UtilisateurID`)
+    REFERENCES `Utilisateur` (`UtilisateurID`);
 
+ALTER TABLE `CommandeLigne` ADD CONSTRAINT `fk_CommandeLigne_CommandeID` FOREIGN KEY(`CommandeID`)
+    REFERENCES `Commande` (`CommandeID`);
 
-CREATE TABLE `Product` (
-                           `ProductID` int  NOT NULL ,
-
-                           `Name` varchar(200)  NOT NULL ,
-                           `Price` money  NOT NULL ,
-                           `SalePrice` money  NOT NULL ,
-                           `Brand` String  NOT NULL ,
-                           `Category` String  NOT NULL ,
-                           `Image` varchar(max)  NOT NULL ,
-    PRIMARY KEY (
-        `ProductID`
-    ),
-    CONSTRAINT `uc_Product_Name` UNIQUE (
-        `Name`
-    )
-);
-
-CREATE TABLE `ProductSale` (
-                               `ProductID` int  NOT NULL ,
-                               `SaleID` int  NOT NULL ,
-                               `QtyForSale` int  NOT NULL ,
-                               PRIMARY KEY (
-                                            `ProductID`,`SaleID`
-                                   )
-);
-
-CREATE TABLE `OrderStatus` (
-                               `OrderStatusID` int  NOT NULL ,
-                               `Name` string  NOT NULL ,
-                               PRIMARY KEY (
-                                            `OrderStatusID`
-                                   ),
-                               CONSTRAINT `uc_OrderStatus_Name` UNIQUE (
-                                                                        `Name`
-                                   )
-);
-
-ALTER TABLE `Order` ADD CONSTRAINT `fk_Order_CustomerID` FOREIGN KEY(`CustomerID`)
-    REFERENCES `Customer` (`CustomerID`);
-
-ALTER TABLE `Order` ADD CONSTRAINT `fk_Order_OrderStatusID` FOREIGN KEY(`OrderStatusID`)
-    REFERENCES `OrderStatus` (`OrderStatusID`);
-
-ALTER TABLE `OrderLine` ADD CONSTRAINT `fk_OrderLine_OrderID` FOREIGN KEY(`OrderID`)
-    REFERENCES `Order` (`OrderID`);
-
-ALTER TABLE `OrderLine` ADD CONSTRAINT `fk_OrderLine_ProductID` FOREIGN KEY(`ProductID`)
-    REFERENCES `Product` (`ProductID`);
-
-ALTER TABLE `ProductSale` ADD CONSTRAINT `fk_ProductSale_ProductID` FOREIGN KEY(`ProductID`)
-    REFERENCES `Product` (`ProductID`);
-
+ALTER TABLE `CommandeLigne` ADD CONSTRAINT `fk_CommandeLigne_ProduitID` FOREIGN KEY(`ProduitID`)
+    REFERENCES `Produit` (`ProduitID`);
+ALTER TABLE `Utilisateur` ADD CONSTRAINT `uc_Utilisateur_Login` UNIQUE (`Login`);
