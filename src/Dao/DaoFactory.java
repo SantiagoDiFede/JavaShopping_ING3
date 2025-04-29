@@ -4,7 +4,6 @@ package Dao;
 import Model.Produit;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 /**
  * La DAO Factory (DaoFactory.java) permet d'initialiser le DAO en chargeant notamment les drivers nécessaires
@@ -69,12 +68,12 @@ public class DaoFactory {
 //    }
 
     /**
-     * Récupération du Dao pour les clients
-     * @return : objet de la classe ClientDAOImpl
+     * Récupération du Dao pour les utilisateurs
+     * @return : objet de la classe utilisateurDAOImpl
      */
-    public DaoClient getClientDAO() {
-        // Retourner un objet de ClientDAOImpl qui implémente ClientDAO
-        return new DaoClientImpl(this);
+    public UtilisateurDao getutilisateurDAO() {
+        // Retourner un objet de utilisateurDAOImpl qui implémente utilisateurDAO
+        return new UtilisateurDaoImpl(this);
     }
 
     /**

@@ -13,7 +13,7 @@ CREATE TABLE `Utilisateur` (
 CREATE TABLE `Commande` (
                             `CommandeID` int  NOT NULL ,
                             `UtilisateurID` int  NOT NULL ,
-                            `Total` double  ,
+                            `PrixTotal` double  ,
                             `StatutCommande` varchar(20)  NOT NULL ,
                             PRIMARY KEY (
                                          `CommandeID`
@@ -34,7 +34,8 @@ CREATE TABLE `Produit` (
                            `ProduitID` int  NOT NULL ,
                            `Nom` varchar(200)  NOT NULL ,
                            `Prix` double  NOT NULL ,
-                           `RabaisPrix` double  ,
+                           `PrixReduction` double  ,
+                           `QteReduction` int  ,
                            `Image` varchar(1000)  NOT NULL ,
                            PRIMARY KEY (
                                         `ProduitID`
