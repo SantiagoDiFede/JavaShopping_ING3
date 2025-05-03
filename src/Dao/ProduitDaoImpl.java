@@ -81,7 +81,7 @@ public class ProduitDaoImpl implements ProduitDao {
             String produitImage = produit.getImage();
 
             // Exécution de la requête INSERT pour ajouter le produit dans la base de données
-            statement.executeUpdate("INSERT INTO produits (Nom, Prix, ReductionPrix, Image) VALUES ('"+produitNom+"', '"+produitPrix+"', '"+produitPrixReduction+"', '"+produitImage+"')");
+            statement.executeUpdate("INSERT INTO Produit (Nom, Prix, ReductionPrix, Image) VALUES ('"+produitNom+"', '"+produitPrix+"', '"+produitPrixReduction+"', '"+produitImage+"')");
 
         }
         catch (SQLException e) {
@@ -135,7 +135,7 @@ public class ProduitDaoImpl implements ProduitDao {
             Statement statement = connexion.createStatement();
 
             // Exécution de la requête DELETE pour supprimer le produit dans la base de données
-            statement.executeUpdate("DELETE FROM produits WHERE produitID="+ produit.getProduitId());
+            statement.executeUpdate("DELETE FROM Produit WHERE produitID="+ produit.getProduitId());
 
         }
         catch (SQLException e) {

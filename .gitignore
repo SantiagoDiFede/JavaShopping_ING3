@@ -23,3 +23,5 @@
 hs_err_pid*
 replay_pid*
 .qodo
+/.idea/
+/JavaShopping_ING3.iml

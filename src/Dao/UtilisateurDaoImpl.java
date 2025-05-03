@@ -83,7 +83,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             Boolean isAdmin = utilisateur.getIsAdmin();
 
             // Exécution de la requête INSERT pour ajouter le utilisateur dans la base de données
-            statement.executeUpdate("INSERT INTO utilisateurs (utilisateurLogin, utilisateurPassword, utilisateurName, utilisateurMail,isAdmin) VALUES ('"+utilisateurLogin+"', '"+utilisateurPassword+"', '"+utilisateurName+"', '"+utilisateurMail+"','"+isAdmin+"')");
+            statement.executeUpdate("INSERT INTO Utilisateur(utilisateurLogin, utilisateurPassword, utilisateurName, utilisateurMail,isAdmin) VALUES ('"+utilisateurLogin+"', '"+utilisateurPassword+"', '"+utilisateurName+"', '"+utilisateurMail+"','"+isAdmin+"')");
 
         }
         catch (SQLException e) {
@@ -137,7 +137,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             Statement statement = connexion.createStatement();
 
             // Exécution de la requête DELETE pour supprimer le utilisateur dans la base de données
-            statement.executeUpdate("DELETE FROM utilisateurs WHERE utilisateurID="+ utilisateur.getutilisateurId());
+            statement.executeUpdate("DELETE FROM Utilisateur WHERE utilisateurID="+ utilisateur.getutilisateurId());
 
         }
         catch (SQLException e) {
