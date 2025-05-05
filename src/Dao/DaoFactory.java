@@ -62,10 +62,10 @@ public class DaoFactory {
      * Récupération du Dao pour le produit
      * @return : objet de la classe ProduitDAOImpl
      */
-//    public DAOProduct getProduitDAO() {
-//        // Retourner un objet de ProduitDAOImpl qui implémente ProduitDAO
-//        return new ProduitDAOImpl(this);
-//    }
+    public ProduitDao getProduitDAO() {
+        // Retourner un objet de ProduitDAOImpl qui implémente ProduitDAO
+        return new ProduitDaoImpl(this);
+    }
 
     /**
      * Récupération du Dao pour les utilisateurs
@@ -80,10 +80,20 @@ public class DaoFactory {
      * Récupération du Dao pour les commandes
      * @return : objet de la classe CommanderDAOImpl
      */
-//    public DaoOrder getCommanderDAO() {
-//        // Retourner un objet de CommanderDAOImpl qui implémente CommanderDAO
-//        return new CommanderDAOImpl(this);
-//    }
+    public CommandeDao getCommandeDAO() {
+        // Retourner un objet de CommanderDAOImpl qui implémente CommanderDAO
+        return new CommandeDaoImpl(this);
+    }
+
+    /**
+     * Récupération du Dao pour les commandes lignes
+     * @return : objet de la classe CommandeLigneDAOImpl
+     */
+    public CommandeLigneDao getCommandeLigneDAO() {
+        // Retourner un objet de CommandeLigneDAOImpl qui implémente CommandeLigneDAO
+        return new CommandeLigneDaoImpl(this);
+    }
+
 
     /**
      *     Fermer la connexion à la base de données

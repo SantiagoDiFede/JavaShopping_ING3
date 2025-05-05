@@ -98,8 +98,33 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
      * @param : id
      * @return : objet de classe Utilisateur cherché et retourné
      */
-    public Utilisateur chercher(int id)  {
-        return null;
+    public Utilisateur chercher(int id) throws SQLException {
+
+        Utilisateur utilisateur = null;
+        try {
+            // connexion
+            Connection connexion = daoFactory.getConnection();
+            ;
+            Statement statement = connexion.createStatement();
+
+            // récupération des utilisateurs de la base de données avec la requete SELECT
+            ResultSet resultats = statement.executeQuery("select * from Utilisateur where utilisateurID=" + id);
+
+            // 	Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
+            if (resultats.next()) {
+                // récupérer les 3 champs de la table produits dans la base de données
+                int utilisateurId = resultats.getInt(1);
+                String utilisateurLogin = resultats.getString(2);
+                String utilisateurPassword = resultats.getString(2);
+                String utilisateurName = resultats.getString(2);
+                String utilisateurMail = resultats.getString(3);
+                Boolean utilisateurIsAdmin = resultats.getBoolean(4);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Utilisateur introuvable");
+        }
+        return utilisateur;
     }
 
     /**
@@ -108,7 +133,33 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
      * @return : objet de classe Utilisateur cherché et retourné
      */
     public Utilisateur chercher(String search)  {
-        return null;
+        Utilisateur utilisateur = null;
+        try {
+            // connexion
+            Connection connexion = daoFactory.getConnection();
+            ;
+            Statement statement = connexion.createStatement();
+
+            // récupération des utilisateurs de la base de données avec la requete SELECT
+            ResultSet resultats = statement.executeQuery("select * from Utilisateur where utilisateurName=" + search);
+
+            // 	Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
+            if (resultats.next()) {
+                // récupérer les 3 champs de la table produits dans la base de données
+                int utilisateurId = resultats.getInt(1);
+                String utilisateurLogin = resultats.getString(2);
+                String utilisateurPassword = resultats.getString(2);
+                String utilisateurName = resultats.getString(2);
+                String utilisateurMail = resultats.getString(3);
+                Boolean utilisateurIsAdmin = resultats.getBoolean(4);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Création de la liste de utilisateurs impossible");
+        }
+
+        return utilisateur;
     }
 
 
@@ -119,6 +170,20 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
      * @return : objet utilisateur en paramètre mis à jour  dans la base de données à retourner
      */
     public Utilisateur modifier(Utilisateur utilisateur) {
+
+        try {
+            // connexion
+            Connection connexion = daoFactory.getConnection();;
+            Statement statement = connexion.createStatement();
+
+            // Exécution de la requête UPDATE pour modifier le utilisateur dans la base de données
+            statement.executeUpdate("UPDATE Utilisateur SET utilisateurLogin='"+utilisateur.getutilisateurLogin()+"', utilisateurPassword='"+utilisateur.getutilisateurPassword()+"', utilisateurName='"+utilisateur.getutilisateurName()+"', utilisateurMail='"+utilisateur.getutilisateurMail()+"', isAdmin='"+utilisateur.getIsAdmin()+"' WHERE utilisateurID="+ utilisateur.getutilisateurId());
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Modification du utilisateur impossible");
+        }
 
         return utilisateur;
     }

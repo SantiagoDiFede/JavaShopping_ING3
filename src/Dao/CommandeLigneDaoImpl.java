@@ -1,7 +1,7 @@
 package Dao;
 
 // import des packages
-import Model.Commande;
+import Model.CommandeLigne;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,12 +10,12 @@ import java.util.ArrayList;
  * implémentation MySQL du stockage dans la base de données des méthodes définies dans l'interface
  * commandeDao.
  */
-public class CommandeDaoImpl implements CommandeDao {
+public class CommandeLigneDaoImpl implements CommandeLigneDao {
     // attribut privé pour l'objet du DaoFactoru
     private DaoFactory daoFactory;
 
     // constructeur dépendant de la classe DaoFactory
-    public CommandeDaoImpl(DaoFactory daoFactory) {
+    public CommandeLigneDaoImpl(DaoFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
 
@@ -24,8 +24,8 @@ public class CommandeDaoImpl implements CommandeDao {
      * Récupérer de la base de données tous les objets des commandes dans une liste
      * @return : liste retournée des objets des commandes récupérés
      */
-    public ArrayList<Commande> getAll() {
-        ArrayList<Commande> listeCommandes = new ArrayList<Commande>();
+    public ArrayList<CommandeLigne> getAllFromCommande(int commandeID) {
+        ArrayList<CommandeLigne> listeCommandes = new ArrayList<CommandeLigne>();
 
         /*
             Récupérer la liste des commandes de la base de données dans listeCommandes
@@ -36,22 +36,22 @@ public class CommandeDaoImpl implements CommandeDao {
             Statement statement = connexion.createStatement();
 
             // récupération des commandes de la base de données avec la requete SELECT
-            ResultSet resultats = statement.executeQuery("select * from Commande");
+            ResultSet resultats = statement.executeQuery("select * from CommandeLigne where commandeID = " + commandeID);
 
             // 	Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
             while (resultats.next()) {
                 // récupérer les 3 champs de la table produits dans la base de données
-                int commandeId= resultats.getInt(1);
-                int utilisateurId = resultats.getInt(2);
-                double prixTotal = resultats.getDouble(3);
-                String statutCommande = resultats.getString(4);
+                int commandeLigneId= resultats.getInt(1);
+                int commandeId = resultats.getInt(2);
+                int produitID = resultats.getInt(3);
+                int Qte = resultats.getInt(4);
 
 
 
                 //instancier un objet de Produit avec ces 3 champs en paramètres
-                Commande commande = new Commande(commandeId,utilisateurId,prixTotal,statutCommande);
+                CommandeLigne commandeLigne = new CommandeLigne(commandeLigneId,commandeId,produitID,Qte);
                 // ajouter ce produit à listeProduits
-                listeCommandes.add(commande);
+                listeCommandes.add(commandeLigne);
             }
         }
         catch (SQLException e) {
@@ -67,19 +67,19 @@ public class CommandeDaoImpl implements CommandeDao {
      Ajouter un nouveau commande en paramètre dans la base de données
      @params : commande = objet de Commande à insérer dans la base de données
      */
-    public void ajouter(Commande commande){
+    public void ajouter(CommandeLigne commandeLigne){
         try {
             // connexion
             Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
             // récupération du nom et prix de l'objet commande en paramètre
-            int utilisateurId = commande.getUtilisateurId();
-            double prixTotal = commande.getPrixTotal();
-            String statutCommande = commande.getStatutCommande();
+            int commandeId = commandeLigne.getCommandeId();
+            int produitId = commandeLigne.getProduitId();
+            int Qte = commandeLigne.getQte();
 
             // Exécution de la requête INSERT pour ajouter le commande dans la base de données
-            statement.executeUpdate("INSERT INTO commandes (commandeID, utilisateurID, prixTotal, statutCommande) VALUES ('"+ utilisateurId +"', '"+ prixTotal +"', '"+ statutCommande +"')");
+            statement.executeUpdate("INSERT INTO CommandeLigne (commandeLigneID, commandeID, produitID, Qte) VALUES ('"+ commandeId +"', '"+ produitId +"', '"+ Qte +"')");
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -93,27 +93,26 @@ public class CommandeDaoImpl implements CommandeDao {
      * @param : id
      * @return : objet de classe Commande cherché et retourné
      */
-    public Commande chercher(int id)  {
-
-        Commande commande = null;
+    public CommandeLigne chercher(int id)  {
+        CommandeLigne commandeLigne = null;
         try {
             // connexion
             Connection connexion = daoFactory.getConnection();;
             Statement statement = connexion.createStatement();
 
             // récupération des commandes de la base de données avec la requete SELECT
-            ResultSet resultats = statement.executeQuery("select * from Commande where commandeID = " + id);
+            ResultSet resultats = statement.executeQuery("select * from CommandeLigne where commandeLigneID = " + id);
 
             // 	Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
             if (resultats.next()) {
                 // récupérer les 3 champs de la table produits dans la base de données
-                int commandeId= resultats.getInt(1);
-                int utilisateurId = resultats.getInt(2);
-                double prixTotal = resultats.getDouble(3);
-                String statutCommande = resultats.getString(4);
+                int commandeLigneId= resultats.getInt(1);
+                int commandeId = resultats.getInt(2);
+                int produitID = resultats.getInt(3);
+                int Qte = resultats.getInt(4);
 
                 //instancier un objet de Produit avec ces 3 champs en paramètres
-                commande = new Commande(commandeId,utilisateurId,prixTotal,statutCommande);
+                commandeLigne = new CommandeLigne(commandeLigneId,commandeId,produitID,Qte);
             }
         }
         catch (SQLException e) {
@@ -122,7 +121,7 @@ public class CommandeDaoImpl implements CommandeDao {
             System.out.println("Création de la liste de commandes impossible");
         }
 
-        return commande;
+        return commandeLigne;
     }
 
 
@@ -134,22 +133,21 @@ public class CommandeDaoImpl implements CommandeDao {
      * @param : commande = objet en paramètre de la classe Commande à mettre à jour à partir de son id
      * @return : objet commande en paramètre mis à jour  dans la base de données à retourner
      */
-    public Commande modifier(Commande commande) {
-
+    public CommandeLigne modifier(CommandeLigne commandeLigne) {
         try {
             // connexion
             Connection connexion = daoFactory.getConnection();;
             Statement statement = connexion.createStatement();
 
-            // Exécution de la requête UPDATE pour modifier le commande dans la base de données
-            statement.executeUpdate("UPDATE Commande SET utilisateurID='"+ commande.getUtilisateurId() +"', prixTotal='"+ commande.getPrixTotal() +"', statutCommande='"+ commande.getStatutCommande() +"' WHERE commandeID="+ commande.getCommandeId());
+            // Exécution de la requête UPDATE pour modifier le utilisateur dans la base de données
+            statement.executeUpdate("UPDATE CommandeLigne SET Qte = "+ commandeLigne.getQte() + " WHERE commandeLigneID="+ commandeLigne.getCommandeLigneId());
 
         }
         catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Modification du commande impossible");
+            System.out.println("Modification du produit impossible");
         }
-        return commande;
+        return commandeLigne;
     }
 
     @Override
@@ -159,14 +157,14 @@ public class CommandeDaoImpl implements CommandeDao {
      * table commander qui ont l'id du commande supprimé.
      * @params : commande = objet de Commande en paramètre à supprimer de la base de données
      */
-    public void supprimer (Commande commande) {
+    public void supprimer (CommandeLigne commandeLigne) {
         try {
             // connexion
             Connection connexion = daoFactory.getConnection();;
             Statement statement = connexion.createStatement();
 
             // Exécution de la requête DELETE pour supprimer le commande dans la base de données
-            statement.executeUpdate("DELETE FROM commandes WHERE commandeID="+ commande.getCommandeId());
+            statement.executeUpdate("DELETE FROM CommandeLigne WHERE commandeID="+ commandeLigne.getCommandeLigneId());
 
         }
         catch (SQLException e) {

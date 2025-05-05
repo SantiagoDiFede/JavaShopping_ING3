@@ -3,6 +3,7 @@ package Dao;
 // import des packages
 import Model.Utilisateur;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -27,7 +28,7 @@ public interface UtilisateurDao {
      * @param : id
      * @return : objet de classe Utilisateur cherché et retourné
      */
-    public Utilisateur chercher(int id);
+    public Utilisateur chercher(int id) throws SQLException;
 
     /**
      * Permet de modifier les données du nom de l'objet de la classe Utilisateur en paramètre

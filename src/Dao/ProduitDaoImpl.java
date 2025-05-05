@@ -43,13 +43,14 @@ public class ProduitDaoImpl implements ProduitDao {
                 // récupérer les 3 champs de la table produits dans la base de données
                 int produitId= resultats.getInt(1);
                 String produitNom = resultats.getString(2);
-                double produitPrix = resultats.getDouble(2);
-                double produitPrixReduction = resultats.getDouble(2);
+                double produitPrix = resultats.getDouble(3);
+                double produitPrixReduction = resultats.getDouble(4);
+                int produitQteReduction = resultats.getInt(5);
                 String produitImage = resultats.getString(2);
 
 
                 //instancier un objet de Produit avec ces 3 champs en paramètres
-                Produit produit = new Produit(produitId,produitNom,produitPrix,produitPrixReduction,produitImage);
+                Produit produit = new Produit(produitId,produitNom,produitPrix,produitPrixReduction,produitQteReduction,produitImage);
 
                 // ajouter ce produit à listeProduits
                 listeProduits.add(produit);
@@ -78,10 +79,11 @@ public class ProduitDaoImpl implements ProduitDao {
             String produitNom = produit.getNom();
             double produitPrix = produit.getPrix();
             double produitPrixReduction = produit.getPrixReduction();
+            int produitQteReduction = produit.getQteReduction();
             String produitImage = produit.getImage();
 
             // Exécution de la requête INSERT pour ajouter le produit dans la base de données
-            statement.executeUpdate("INSERT INTO produits (Nom, Prix, ReductionPrix, Image) VALUES ('"+produitNom+"', '"+produitPrix+"', '"+produitPrixReduction+"', '"+produitImage+"')");
+            statement.executeUpdate("INSERT INTO Produit (Nom, Prix, PrixReduction,QteReduction, Image) VALUES ('"+produitNom+"', '"+produitPrix+"', '"+produitPrixReduction+"', '"+produitQteReduction+"', '"+produitImage+"')");
 
         }
         catch (SQLException e) {
@@ -96,8 +98,36 @@ public class ProduitDaoImpl implements ProduitDao {
      * @param : id
      * @return : objet de classe Produit cherché et retourné
      */
-    public Produit chercher(int id)  {
-        return null;
+    public Produit chercher(int id) {
+
+        Produit produit = null;
+        try {
+            // connexion
+            Connection connexion = daoFactory.getConnection();
+            ;
+            Statement statement = connexion.createStatement();
+
+            // récupération des produits de la base de données avec la requete SELECT
+            ResultSet resultats = statement.executeQuery("select * from Produit where produitID=" + id);
+
+            // 	Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
+            if (resultats.next()) {
+                // récupérer les 3 champs de la table produits dans la base de données
+                int produitId = resultats.getInt(1);
+                String produitNom = resultats.getString(2);
+                double produitPrix = resultats.getDouble(3);
+                double produitPrixReduction = resultats.getDouble(4);
+                int produitQteReduction = resultats.getInt(5);
+                String produitImage = resultats.getString(2);
+                //instancier un objet de Produit avec ces 3 champs en paramètres
+                produit = new Produit(produitId, produitNom, produitPrix, produitPrixReduction, produitQteReduction, produitImage);
+            }
+        } catch (SQLException e) {
+            //traitement de l'exception
+            e.printStackTrace();
+            System.out.println("Produit non trouvé");
+        }
+        return produit;
     }
 
     /**
@@ -106,7 +136,34 @@ public class ProduitDaoImpl implements ProduitDao {
      * @return : objet de classe Produit cherché et retourné
      */
     public Produit chercher(String search)  {
-        return null;
+        Produit produit = null;
+        try {
+            // connexion
+            Connection connexion = daoFactory.getConnection();
+            ;
+            Statement statement = connexion.createStatement();
+
+            // récupération des produits de la base de données avec la requete SELECT
+            ResultSet resultats = statement.executeQuery("select * from Produit where Nom like '%" + search + "%'");
+
+            // 	Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
+            if (resultats.next()) {
+                // récupérer les 3 champs de la table produits dans la base de données
+                int produitId = resultats.getInt(1);
+                String produitNom = resultats.getString(2);
+                double produitPrix = resultats.getDouble(3);
+                double produitPrixReduction = resultats.getDouble(4);
+                int produitQteReduction = resultats.getInt(5);
+                String produitImage = resultats.getString(2);
+                //instancier un objet de Produit avec ces 3 champs en paramètres
+                produit = new Produit(produitId, produitNom, produitPrix, produitPrixReduction, produitQteReduction, produitImage);
+            }
+        } catch (SQLException e) {
+            //traitement de l'exception
+            e.printStackTrace();
+            System.out.println("Produit non trouvé");
+        }
+        return produit;
     }
 
 
@@ -117,7 +174,26 @@ public class ProduitDaoImpl implements ProduitDao {
      * @return : objet produit en paramètre mis à jour  dans la base de données à retourner
      */
     public Produit modifier(Produit produit) {
+        try {
+            // connexion
+            Connection connexion = daoFactory.getConnection();;
+            Statement statement = connexion.createStatement();
 
+            // récupération du nom et prix de l'objet produit en paramètre
+            String produitNom = produit.getNom();
+            double produitPrix = produit.getPrix();
+            double produitPrixReduction = produit.getPrixReduction();
+            int produitQteReduction = produit.getQteReduction();
+            String produitImage = produit.getImage();
+
+            // Exécution de la requête UPDATE pour modifier le produit dans la base de données
+            statement.executeUpdate("UPDATE Produit SET Nom='"+produitNom+"', Prix='"+produitPrix+"', PrixReduction='"+produitPrixReduction+"', QteReduction='"+produitQteReduction+"', Image='"+produitImage+"' WHERE ProduitID="+produit.getProduitId());
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Modification du produit impossible");
+        }
         return produit;
     }
 
@@ -135,7 +211,7 @@ public class ProduitDaoImpl implements ProduitDao {
             Statement statement = connexion.createStatement();
 
             // Exécution de la requête DELETE pour supprimer le produit dans la base de données
-            statement.executeUpdate("DELETE FROM produits WHERE produitID="+ produit.getProduitId());
+            statement.executeUpdate("DELETE FROM Produit WHERE produitID="+ produit.getProduitId());
 
         }
         catch (SQLException e) {
