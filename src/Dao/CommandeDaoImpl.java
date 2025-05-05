@@ -79,7 +79,7 @@ public class CommandeDaoImpl implements CommandeDao {
             String statutCommande = commande.getStatutCommande();
 
             // Exécution de la requête INSERT pour ajouter le commande dans la base de données
-            statement.executeUpdate("INSERT INTO commandes (commandeID, utilisateurID, prixTotal, statutCommande) VALUES ('"+ utilisateurId +"', '"+ prixTotal +"', '"+ statutCommande +"')");
+            statement.executeUpdate("INSERT INTO Commande (commandeID, utilisateurID, prixTotal, statutCommande) VALUES ('"+ utilisateurId +"', '"+ prixTotal +"', '"+ statutCommande +"')");
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -166,7 +166,7 @@ public class CommandeDaoImpl implements CommandeDao {
             Statement statement = connexion.createStatement();
 
             // Exécution de la requête DELETE pour supprimer le commande dans la base de données
-            statement.executeUpdate("DELETE FROM commandes WHERE commandeID="+ commande.getCommandeId());
+            statement.executeUpdate("DELETE FROM Commande WHERE commandeID="+ commande.getCommandeId());
 
         }
         catch (SQLException e) {
