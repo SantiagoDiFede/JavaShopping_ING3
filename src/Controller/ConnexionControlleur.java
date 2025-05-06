@@ -9,6 +9,7 @@ public class ConnexionControlleur {
     
     private DaoFactory daoFactory;
     private UtilisateurDaoImpl utilisateurDao;
+    private Utilisateur utilisateurConnecte; // Nouvel attribut pour stocker l'utilisateur connecté
     
     /**
      * 
@@ -63,6 +64,10 @@ public class ConnexionControlleur {
             
             //Afficher un message de succes de l'inscription
             System.out.println("Inscription réussie de l'utilisateur: " + login);
+
+            // Connecter automatiquement l'utilisateur après inscription
+            this.utilisateurConnecte = nouvelUtilisateur;
+            
             return nouvelUtilisateur;
             
         } catch (Exception e) {
@@ -101,7 +106,12 @@ public class ConnexionControlleur {
             */
             if (utilisateur != null && utilisateur.getutilisateurPassword().equals(password)) {
                 System.out.println("Connexion réussie pour l'utilisateur: " + login);
+
+                // Stocker l'utilisateur connecté
+                this.utilisateurConnecte = utilisateur;
+
                 return utilisateur;
+
             } else {
                 System.out.println("Login ou mot de passe incorrect");
                 return null;
@@ -123,5 +133,26 @@ public class ConnexionControlleur {
      */
     public boolean estAdmin(Utilisateur utilisateur) {
         return utilisateur != null && utilisateur.isAdmin();
+    }
+
+    public Utilisateur getUtilisateurConnecte() {
+        return utilisateurConnecte;
+    }
+    
+    /**
+     * 
+     * Déconnecte l'utilisateur actuel
+     * @return true si la déconnexion est réussie, false sinon
+     * 
+     */
+    public boolean deconnexion() {
+        if (utilisateurConnecte != null) {
+            utilisateurConnecte = null;
+            System.out.println("Déconnexion réussie.");
+            return true;
+        } else {
+            System.out.println("Aucun utilisateur n'est connecté.");
+            return false;
+        }
     }
 }
