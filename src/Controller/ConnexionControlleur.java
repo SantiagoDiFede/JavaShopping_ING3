@@ -3,6 +3,7 @@ package Controller;
 import Dao.DaoFactory;
 import Dao.UtilisateurDaoImpl;
 import Model.Utilisateur;
+import java.util.Scanner;
 
 public class ConnexionControlleur {
     
@@ -22,24 +23,38 @@ public class ConnexionControlleur {
     
     /**
      * 
-     * Permet à un utilisateur de s'inscrire
-     * @param login Login de l'utilisateur
-     * @param password Mot de passe de l'utilisateur
-     * @param name Nom de l'utilisateur
-     * @param email Email de l'utilisateur
+     * Permet à un utilisateur de s'inscrire en saisissant ses informations
      * @return L'utilisateur créé ou null si l'inscription a échoué
      * 
      */
-    public Utilisateur inscription(String login, String password, String name, String email) {
+    public Utilisateur inscription() {
+        Scanner scanner =new Scanner(System.in);
         try {
+            System.out.println("INSCRIPTION");
+
+            //Saisie du login
+            System.out.print("Saisissez votre login :");
+            String login = scanner.nextLine();
+
             //Vérifier si le login existe déjà
             Utilisateur existant = utilisateurDao.chercher(login);
             // si le login est déja existant
             if (existant != null) {
-                System.out.println("Ce login est déjà utilisé");
+                System.out.print("Ce login est déjà utilisé");
                 return null;
             }
-            
+            //Saisie du nom
+            System.out.print("Saisissez votre nom :");
+            String name = scanner.nextLine();
+
+            //Saisie de l'email
+            System.out.print("Saisissez votre email ;");
+            String email = scanner.nextLine();
+
+            //Saisie du mot de passe
+            System.out.print("Saisissez votre mot de passe :");
+            String password = scanner.nextLine();
+
             //Créer un nouvel utilisateur, pas admin par défaut
             Utilisateur nouvelUtilisateur = new Utilisateur(login, password, name, email, false);
             
@@ -59,14 +74,24 @@ public class ConnexionControlleur {
     
     /**
      * 
-     * Permet à un utilisateur de se connecter
-     * @param login Login de l'utilisateur
-     * @param password Mot de passe de l'utilisateur
+     * Permet à un utilisateur de se connecter en saisissant ses informations
      * @return L'utilisateur connecté ou null si la connexion a échoué
      * 
      */
-    public Utilisateur connexion(String login, String password) {
+    public Utilisateur connexion() {
+        Scanner scanner = new Scanner(System.in);
         try {
+            System.out.println("CONNEXION");
+
+            //Saisie du login
+            System.out.print("Saisissez votre login :");
+            String login = scanner.nextLine();
+
+            //Saisie du mot de passse
+            System.out.print("Saisissez votre mot de passe :");
+            String password = scanner.nextLine();
+
+
             //Chercher l'utilisateur avec son login
             Utilisateur utilisateur = utilisateurDao.chercher(login);
             
