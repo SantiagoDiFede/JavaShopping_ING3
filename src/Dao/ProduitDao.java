@@ -42,6 +42,6 @@ public interface ProduitDao {
      * table commander qui ont l'id du produit supprimé.
      * @params : produit = objet de Produit en paramètre à supprimer de la base de données
      */
-    public void supprimer (Produit produit);
+    public void supprimer (int produitId);
 
 }

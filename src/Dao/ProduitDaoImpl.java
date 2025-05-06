@@ -204,14 +204,14 @@ public class ProduitDaoImpl implements ProduitDao {
      * table commander qui ont l'id du produit supprimé.
      * @params : produit = objet de Produit en paramètre à supprimer de la base de données
      */
-    public void supprimer (Produit produit) {
+    public void supprimer (int produitId) {
         try {
             // connexion
             Connection connexion = daoFactory.getConnection();;
             Statement statement = connexion.createStatement();
 
             // Exécution de la requête DELETE pour supprimer le produit dans la base de données
-            statement.executeUpdate("DELETE FROM Produit WHERE produitID="+ produit.getProduitId());
+            statement.executeUpdate("DELETE FROM Produit WHERE produitId="+ produitId);
 
         }
         catch (SQLException e) {

@@ -80,7 +80,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             String utilisateurPassword = utilisateur.getutilisateurPassword();
             String utilisateurName = utilisateur.getutilisateurName();
             String utilisateurMail = utilisateur.getutilisateurMail();
-            Boolean isAdmin = utilisateur.getIsAdmin();
+            Boolean isAdmin = utilisateur.isAdmin();
 
             // Exécution de la requête INSERT pour ajouter le utilisateur dans la base de données
             statement.executeUpdate("INSERT INTO Utilisateur(utilisateurLogin, utilisateurPassword, utilisateurName, utilisateurMail,isAdmin) VALUES ('"+utilisateurLogin+"', '"+utilisateurPassword+"', '"+utilisateurName+"', '"+utilisateurMail+"','"+isAdmin+"')");
@@ -98,7 +98,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
      * @param : id
      * @return : objet de classe Utilisateur cherché et retourné
      */
-    public Utilisateur chercher(int id) throws SQLException {
+    public Utilisateur chercher(int id) {
 
         Utilisateur utilisateur = null;
         try {
@@ -177,7 +177,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             Statement statement = connexion.createStatement();
 
             // Exécution de la requête UPDATE pour modifier le utilisateur dans la base de données
-            statement.executeUpdate("UPDATE Utilisateur SET utilisateurLogin='"+utilisateur.getutilisateurLogin()+"', utilisateurPassword='"+utilisateur.getutilisateurPassword()+"', utilisateurName='"+utilisateur.getutilisateurName()+"', utilisateurMail='"+utilisateur.getutilisateurMail()+"', isAdmin='"+utilisateur.getIsAdmin()+"' WHERE utilisateurID="+ utilisateur.getutilisateurId());
+            statement.executeUpdate("UPDATE Utilisateur SET utilisateurLogin='"+utilisateur.getutilisateurLogin()+"', utilisateurPassword='"+utilisateur.getutilisateurPassword()+"', utilisateurName='"+utilisateur.getutilisateurName()+"', utilisateurMail='"+utilisateur.getutilisateurMail()+"', isAdmin='"+utilisateur.isAdmin()+"' WHERE utilisateurID="+ utilisateur.getutilisateurId());
 
         }
         catch (SQLException e) {

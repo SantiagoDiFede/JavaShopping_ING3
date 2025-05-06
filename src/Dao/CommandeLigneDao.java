@@ -40,7 +40,7 @@ public interface CommandeLigneDao {
      * table commander qui ont l'id de commande supprimé.
      * @params : commande = objet de Commande en paramètre à supprimer de la base de données
      */
-    public void supprimer (CommandeLigne commandeLigne);
+    public void supprimer (int commandeLigneId);
 
 }
 

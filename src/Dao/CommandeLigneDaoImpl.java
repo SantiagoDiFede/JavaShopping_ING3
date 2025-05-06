@@ -157,14 +157,14 @@ public class CommandeLigneDaoImpl implements CommandeLigneDao {
      * table commander qui ont l'id du commande supprimé.
      * @params : commande = objet de Commande en paramètre à supprimer de la base de données
      */
-    public void supprimer (CommandeLigne commandeLigne) {
+    public void supprimer (int commandeLigneId) {
         try {
             // connexion
             Connection connexion = daoFactory.getConnection();;
             Statement statement = connexion.createStatement();
 
             // Exécution de la requête DELETE pour supprimer le commande dans la base de données
-            statement.executeUpdate("DELETE FROM CommandeLigne WHERE commandeID="+ commandeLigne.getCommandeLigneId());
+            statement.executeUpdate("DELETE FROM CommandeLigne WHERE commandeID="+ commandeLigneId);
 
         }
         catch (SQLException e) {

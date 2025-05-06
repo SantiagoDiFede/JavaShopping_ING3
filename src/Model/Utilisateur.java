@@ -34,7 +34,7 @@ public class Utilisateur {
     public String getutilisateurPassword() { return utilisateurPassword; }
     public String getutilisateurName() { return utilisateurName; }
     public String getutilisateurMail() { return utilisateurMail; }
-    public Boolean getIsAdmin() { return isAdmin; }
+    public Boolean isAdmin() { return isAdmin; }
 
 
 }
