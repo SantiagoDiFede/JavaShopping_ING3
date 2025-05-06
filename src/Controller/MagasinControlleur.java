@@ -5,8 +5,6 @@ import Dao.UtilisateurDaoImpl;
 import Model.Produit;
 import Model.Utilisateur;
 
-import java.sql.SQLException;
-
 public class MagasinControlleur {
 
     DaoFactory daoFactory;
