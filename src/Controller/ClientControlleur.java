@@ -1,7 +1,17 @@
 package Controller;
+import Dao.CommandeDao;
+import Dao.CommandeDaoImpl;
+import Dao.CommandeLigneDao;
+import Dao.CommandeLigneDaoImpl;
 import Dao.DaoFactory;
+import Dao.ProduitDao;
+import Dao.ProduitDaoImpl;
 import Dao.UtilisateurDaoImpl;
+import Model.Commande;
+import Model.CommandeLigne;
+import Model.Produit;
 import Model.Utilisateur;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ClientControlleur {
@@ -9,6 +19,9 @@ public class ClientControlleur {
     private DaoFactory daoFactory;
     private UtilisateurDaoImpl utilisateurDao;
     private Utilisateur utilisateurConnecte;
+    private CommandeDao commandeDao;
+    private CommandeLigneDao commandeLigneDao;
+    private ProduitDao produitDao;
     
     /**
      * 
@@ -20,7 +33,9 @@ public class ClientControlleur {
     public ClientControlleur(DaoFactory daoFactory, Utilisateur utilisateur) {
         this.daoFactory = daoFactory;
         this.utilisateurDao = new UtilisateurDaoImpl(daoFactory);
-        
+        this.commandeDao = new CommandeDaoImpl(daoFactory);
+        this.commandeLigneDao = new CommandeLigneDaoImpl(daoFactory);
+        this.produitDao = new ProduitDaoImpl(daoFactory);
         this.utilisateurConnecte = utilisateur;
     }
     
@@ -81,5 +96,68 @@ public class ClientControlleur {
             return null;
         }
     }
+    /**
+ * Récupère et affiche l'historique des commandes de l'utilisateur connecté
+ * @return Liste des commandes de l'utilisateur ou null en cas d'erreur
+ */
+public ArrayList<Commande> GetHistorique() {
+    try {
+        //Vérifier que l'utilisateur est connecté
+        if (utilisateurConnecte == null) {
+            System.out.println("Vous devez être connecté pour consulter votre historique.");
+            return null;
+        }
+        
+        //Récupérer les commandes de l'utilisateur
+        ArrayList<Commande> commandes = commandeDao.getCommandesUtilisateur(utilisateurConnecte.getutilisateurId());
+        
+        //Afficher les commandes
+        if (commandes.isEmpty()) {// si l'utilisateur n'a pas de commandes
+            System.out.println("Vous n'avez pas encore passé de commande.");
+        } else {
+            System.out.println("\n=== HISTORIQUE DES COMMANDES ===");
+            
+            // Pour chaque commande, afficher le numéro de commande, le statut et le prix total
+            for (Commande commande : commandes) {
+                System.out.println("\n------------------------------------------");
+                System.out.println("Commande #" + commande.getCommandeId());
+                System.out.println("Statut: " + commande.getStatutCommande());
+                System.out.println("Prix total: " + commande.getPrixTotal() + " Euros");
+                
+                // Pour chaque commande récupérer les lignes de cette commande
+                ArrayList<CommandeLigne> lignes = commandeLigneDao.getAllFromCommande(commande.getCommandeId());
+                
+                if (!lignes.isEmpty()) {
+                    System.out.println("\nDétails de la commande:");
+                    System.out.println("----------------------");
+                    
+                    //Pour chaque ligne de commande
+                    for (CommandeLigne ligne : lignes) {
+                        //Récupérer les informations du produit pour avoir la quantité, le prix, le nom
+                        Produit produit = produitDao.chercher(ligne.getProduitId());
+                        
+                        if (produit != null) {
+                            System.out.println(ligne.getQte() + "x " + produit.getNom() + 
+                                              " - Prix unitaire: " + produit.getPrix() + " Euros" +
+                                              " - Total: " + (produit.getPrix() * ligne.getQte()) + " Euros");
+                        } else {//Si le produit n'existe pas
+                            System.out.println(ligne.getQte() + "x Produit inconnu (ID: " + ligne.getProduitId() + ")");
+                        }
+                    }
+                } else {
+                    System.out.println("\nAucun détail disponible pour cette commande.");
+                }
+            }
+            System.out.println("\n------------------------------------------");
+        }
+        
+        return commandes;
+        
+    } catch (Exception e) {
+        System.out.println("Erreur lors de la récupération de l'historique: " + e.getMessage());
+        e.printStackTrace();
+        return null;
+    }
+}
     
 }
