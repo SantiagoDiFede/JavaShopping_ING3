@@ -49,7 +49,7 @@ public class ConnexionControlleur {
             String name = scanner.nextLine();
 
             //Saisie de l'email
-            System.out.print("Saisissez votre email ;");
+            System.out.print("Saisissez votre email :");
             String email = scanner.nextLine();
 
             //Saisie du mot de passe

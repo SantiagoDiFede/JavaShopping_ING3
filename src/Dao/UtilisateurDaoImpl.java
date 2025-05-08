@@ -2,7 +2,6 @@ package Dao;
 
 // import des packages
 import Model.Utilisateur;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -32,27 +31,27 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
         */
         try {
             // connexion
-            Connection connexion = daoFactory.getConnection();;
-            Statement statement = connexion.createStatement();
+            Connection connexion = daoFactory.getConnection();
+            
+            PreparedStatement preparedStatement = connexion.prepareStatement("SELECT * FROM Utilisateur");
 
             // récupération des utilisateurs de la base de données avec la requete SELECT
-            ResultSet resultats = statement.executeQuery("select * from Utilisateur");
+            ResultSet resultats = preparedStatement.executeQuery();
 
-            // 	Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
+            // Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
             while (resultats.next()) {
-                // récupérer les 3 champs de la table produits dans la base de données
-                int utilisateurId= resultats.getInt(1);
-                String utilisateurLogin = resultats.getString(2);
-                String utilisateurPassword = resultats.getString(2);
-                String utilisateurName = resultats.getString(2);
-                String utilisateurMail = resultats.getString(3);
-                Boolean utilisateurIsAdmin = resultats.getBoolean(4);
+                // récupérer les champs de la table Utilisateur dans la base de données
+                int utilisateurId = resultats.getInt("UtilisateurID");
+                String utilisateurLogin = resultats.getString("Login");
+                String utilisateurPassword = resultats.getString("Password");
+                String utilisateurName = resultats.getString("Name");
+                String utilisateurMail = resultats.getString("Mail");
+                Boolean utilisateurIsAdmin = resultats.getBoolean("isAdmin");
 
+                //instancier un objet de Utilisateur avec ces champs en paramètres
+                Utilisateur utilisateur = new Utilisateur(utilisateurId, utilisateurLogin, utilisateurPassword, utilisateurName, utilisateurMail, utilisateurIsAdmin);
 
-                //instancier un objet de Produit avec ces 3 champs en paramètres
-                Utilisateur utilisateur = new Utilisateur(utilisateurId,utilisateurLogin,utilisateurPassword,utilisateurName,utilisateurMail,utilisateurIsAdmin);
-
-                // ajouter ce produit à listeProduits
+                // ajouter cet utilisateur à listeUtilisateurs
                 listeUtilisateurs.add(utilisateur);
             }
         }
@@ -72,25 +71,26 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
     public void ajouter(Utilisateur utilisateur){
         try {
             // connexion
-            Connection connexion = daoFactory.getConnection();;
-            Statement statement = connexion.createStatement();
+            Connection connexion = daoFactory.getConnection();
+            
+            // Préparation de la requête avec des paramètres
+            PreparedStatement preparedStatement = connexion.prepareStatement(
+                "INSERT INTO Utilisateur(Login, Password, Name, Mail, isAdmin) VALUES (?, ?, ?, ?, ?)");
+            
+            // récupération des informations de l'objet utilisateur en paramètre
+            preparedStatement.setString(1, utilisateur.getutilisateurLogin());
+            preparedStatement.setString(2, utilisateur.getutilisateurPassword());
+            preparedStatement.setString(3, utilisateur.getutilisateurName());
+            preparedStatement.setString(4, utilisateur.getutilisateurMail());
+            preparedStatement.setBoolean(5, utilisateur.isAdmin());
 
-            // récupération du nom et prix de l'objet product en paramètre
-            String utilisateurLogin = utilisateur.getutilisateurLogin();
-            String utilisateurPassword = utilisateur.getutilisateurPassword();
-            String utilisateurName = utilisateur.getutilisateurName();
-            String utilisateurMail = utilisateur.getutilisateurMail();
-            Boolean isAdmin = utilisateur.isAdmin();
-
-            // Exécution de la requête INSERT pour ajouter le utilisateur dans la base de données
-            statement.executeUpdate("INSERT INTO Utilisateur(utilisateurLogin, utilisateurPassword, utilisateurName, utilisateurMail,isAdmin) VALUES ('"+utilisateurLogin+"', '"+utilisateurPassword+"', '"+utilisateurName+"', '"+utilisateurMail+"','"+isAdmin+"')");
-
+            // Exécution de la requête INSERT pour ajouter l'utilisateur dans la base de données
+            preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Ajout du utilisateur impossible");
+            System.out.println("Ajout de l'utilisateur impossible");
         }
-
     }
 
     /**
@@ -99,26 +99,27 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
      * @return : objet de classe Utilisateur cherché et retourné
      */
     public Utilisateur chercher(int id) {
-
         Utilisateur utilisateur = null;
         try {
             // connexion
             Connection connexion = daoFactory.getConnection();
-            ;
             Statement statement = connexion.createStatement();
 
             // récupération des utilisateurs de la base de données avec la requete SELECT
-            ResultSet resultats = statement.executeQuery("select * from Utilisateur where utilisateurID=" + id);
+            ResultSet resultats = statement.executeQuery("SELECT * FROM Utilisateur WHERE UtilisateurID=" + id);
 
-            // 	Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
+            // Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
             if (resultats.next()) {
-                // récupérer les 3 champs de la table produits dans la base de données
-                int utilisateurId = resultats.getInt(1);
-                String utilisateurLogin = resultats.getString(2);
-                String utilisateurPassword = resultats.getString(2);
-                String utilisateurName = resultats.getString(2);
-                String utilisateurMail = resultats.getString(3);
-                Boolean utilisateurIsAdmin = resultats.getBoolean(4);
+                // récupérer les champs de la table Utilisateur dans la base de données
+                int utilisateurId = resultats.getInt("UtilisateurID");
+                String utilisateurLogin = resultats.getString("Login");
+                String utilisateurPassword = resultats.getString("Password");
+                String utilisateurName = resultats.getString("Name");
+                String utilisateurMail = resultats.getString("Mail");
+                Boolean utilisateurIsAdmin = resultats.getBoolean("isAdmin");
+                
+                // Création de l'objet Utilisateur avec les données récupérées
+                utilisateur = new Utilisateur(utilisateurId, utilisateurLogin, utilisateurPassword, utilisateurName, utilisateurMail, utilisateurIsAdmin);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -128,61 +129,74 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
     }
 
     /**
-     * Permet de chercher et récupérer un objet de Utilisateur dans la base de données via un string en paramètre
-     * @param : nom
+     * Permet de chercher et récupérer un objet de Utilisateur dans la base de données via son login en paramètre
+     * @param : login
      * @return : objet de classe Utilisateur cherché et retourné
      */
-    public Utilisateur chercher(String search)  {
+    public Utilisateur chercher(String search) {
         Utilisateur utilisateur = null;
         try {
             // connexion
             Connection connexion = daoFactory.getConnection();
-            ;
-            Statement statement = connexion.createStatement();
+            
+            // Préparation de la requête avec un paramètre
+            PreparedStatement preparedStatement = connexion.prepareStatement(
+                "SELECT * FROM Utilisateur WHERE Login = ?");
+            preparedStatement.setString(1, search);
 
             // récupération des utilisateurs de la base de données avec la requete SELECT
-            ResultSet resultats = statement.executeQuery("select * from Utilisateur where utilisateurName=" + search);
+            ResultSet resultats = preparedStatement.executeQuery();
 
-            // 	Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
+            // Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
             if (resultats.next()) {
-                // récupérer les 3 champs de la table produits dans la base de données
-                int utilisateurId = resultats.getInt(1);
-                String utilisateurLogin = resultats.getString(2);
-                String utilisateurPassword = resultats.getString(2);
-                String utilisateurName = resultats.getString(2);
-                String utilisateurMail = resultats.getString(3);
-                Boolean utilisateurIsAdmin = resultats.getBoolean(4);
+                // récupérer les champs de la table Utilisateur dans la base de données
+                int utilisateurId = resultats.getInt("UtilisateurID");
+                String utilisateurLogin = resultats.getString("Login");
+                String utilisateurPassword = resultats.getString("Password");
+                String utilisateurName = resultats.getString("Name");
+                String utilisateurMail = resultats.getString("Mail");
+                Boolean utilisateurIsAdmin = resultats.getBoolean("isAdmin");
+                
+                // Création de l'objet Utilisateur avec les données récupérées
+                utilisateur = new Utilisateur(utilisateurId, utilisateurLogin, utilisateurPassword, utilisateurName, utilisateurMail, utilisateurIsAdmin);
             }
         }
         catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Création de la liste de utilisateurs impossible");
+            System.out.println("Recherche de l'utilisateur impossible");
         }
 
         return utilisateur;
     }
 
-
     /**
      * Permet de modifier les données de l'objet de la classe Utilisateur en paramètre
      * dans la base de données à partir de cet objet en paramètre
      * @param : utilisateur = objet en paramètre de la classe Utilisateur à mettre à jour à partir de son id
-     * @return : objet utilisateur en paramètre mis à jour  dans la base de données à retourner
+     * @return : objet utilisateur en paramètre mis à jour dans la base de données à retourner
      */
     public Utilisateur modifier(Utilisateur utilisateur) {
-
         try {
             // connexion
-            Connection connexion = daoFactory.getConnection();;
-            Statement statement = connexion.createStatement();
+            Connection connexion = daoFactory.getConnection();
+            
+            // Préparation de la requête avec des paramètres
+            PreparedStatement preparedStatement = connexion.prepareStatement(
+                "UPDATE Utilisateur SET Login = ?, Password = ?, Name = ?, Mail = ?, isAdmin = ? WHERE UtilisateurID = ?");
+            
+            preparedStatement.setString(1, utilisateur.getutilisateurLogin());
+            preparedStatement.setString(2, utilisateur.getutilisateurPassword());
+            preparedStatement.setString(3, utilisateur.getutilisateurName());
+            preparedStatement.setString(4, utilisateur.getutilisateurMail());
+            preparedStatement.setBoolean(5, utilisateur.isAdmin());
+            preparedStatement.setInt(6, utilisateur.getutilisateurId());
 
-            // Exécution de la requête UPDATE pour modifier le utilisateur dans la base de données
-            statement.executeUpdate("UPDATE Utilisateur SET utilisateurLogin='"+utilisateur.getutilisateurLogin()+"', utilisateurPassword='"+utilisateur.getutilisateurPassword()+"', utilisateurName='"+utilisateur.getutilisateurName()+"', utilisateurMail='"+utilisateur.getutilisateurMail()+"', isAdmin='"+utilisateur.isAdmin()+"' WHERE utilisateurID="+ utilisateur.getutilisateurId());
-
+            // Exécution de la requête UPDATE pour modifier l'utilisateur dans la base de données
+            preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Modification du utilisateur impossible");
+            System.out.println("Modification de l'utilisateur impossible");
         }
 
         return utilisateur;
@@ -195,22 +209,22 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
      * table commander qui ont l'id du utilisateur supprimé.
      * @params : utilisateur = objet de Utilisateur en paramètre à supprimer de la base de données
      */
-    public void supprimer (Utilisateur utilisateur) {
+    public void supprimer(Utilisateur utilisateur) {
         try {
             // connexion
-            Connection connexion = daoFactory.getConnection();;
-            Statement statement = connexion.createStatement();
+            Connection connexion = daoFactory.getConnection();
+            
+            // Préparation de la requête avec un paramètre
+            PreparedStatement preparedStatement = connexion.prepareStatement(
+                "DELETE FROM Utilisateur WHERE UtilisateurID = ?");
+            preparedStatement.setInt(1, utilisateur.getutilisateurId());
 
-            // Exécution de la requête DELETE pour supprimer le utilisateur dans la base de données
-            statement.executeUpdate("DELETE FROM Utilisateur WHERE utilisateurID="+ utilisateur.getutilisateurId());
-
+            // Exécution de la requête DELETE pour supprimer l'utilisateur dans la base de données
+            preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Suppression du utilisateur impossible");
+            System.out.println("Suppression de l'utilisateur impossible");
         }
-
     }
 }
-
-
