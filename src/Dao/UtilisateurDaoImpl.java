@@ -38,7 +38,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             // récupération des utilisateurs de la base de données avec la requete SELECT
             ResultSet resultats = preparedStatement.executeQuery();
 
-            // Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
+            //Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
             while (resultats.next()) {
                 // récupérer les champs de la table Utilisateur dans la base de données
                 int utilisateurId = resultats.getInt("UtilisateurID");
@@ -73,11 +73,11 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             // connexion
             Connection connexion = daoFactory.getConnection();
             
-            // Préparation de la requête avec des paramètres
+            //Préparation de la requête avec des paramètres
             PreparedStatement preparedStatement = connexion.prepareStatement(
                 "INSERT INTO Utilisateur(Login, Password, Name, Mail, isAdmin) VALUES (?, ?, ?, ?, ?)");
             
-            // récupération des informations de l'objet utilisateur en paramètre
+            //récupération des informations de l'objet utilisateur en paramètre
             preparedStatement.setString(1, utilisateur.getutilisateurLogin());
             preparedStatement.setString(2, utilisateur.getutilisateurPassword());
             preparedStatement.setString(3, utilisateur.getutilisateurName());
@@ -101,14 +101,14 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
     public Utilisateur chercher(int id) {
         Utilisateur utilisateur = null;
         try {
-            // connexion
+            //connexion
             Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
-            // récupération des utilisateurs de la base de données avec la requete SELECT
+            //récupération des utilisateurs de la base de données avec la requete SELECT
             ResultSet resultats = statement.executeQuery("SELECT * FROM Utilisateur WHERE UtilisateurID=" + id);
 
-            // Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
+            //Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
             if (resultats.next()) {
                 // récupérer les champs de la table Utilisateur dans la base de données
                 int utilisateurId = resultats.getInt("UtilisateurID");
@@ -118,7 +118,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
                 String utilisateurMail = resultats.getString("Mail");
                 Boolean utilisateurIsAdmin = resultats.getBoolean("isAdmin");
                 
-                // Création de l'objet Utilisateur avec les données récupérées
+                //Création de l'objet Utilisateur avec les données récupérées
                 utilisateur = new Utilisateur(utilisateurId, utilisateurLogin, utilisateurPassword, utilisateurName, utilisateurMail, utilisateurIsAdmin);
             }
         } catch (SQLException e) {
@@ -136,7 +136,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
     public Utilisateur chercher(String search) {
         Utilisateur utilisateur = null;
         try {
-            // connexion
+            //connexion
             Connection connexion = daoFactory.getConnection();
             
             // Préparation de la requête avec un paramètre
@@ -144,10 +144,10 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
                 "SELECT * FROM Utilisateur WHERE Login = ?");
             preparedStatement.setString(1, search);
 
-            // récupération des utilisateurs de la base de données avec la requete SELECT
+            //récupération des utilisateurs de la base de données avec la requete SELECT
             ResultSet resultats = preparedStatement.executeQuery();
 
-            // Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
+            //Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
             if (resultats.next()) {
                 // récupérer les champs de la table Utilisateur dans la base de données
                 int utilisateurId = resultats.getInt("UtilisateurID");
@@ -157,7 +157,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
                 String utilisateurMail = resultats.getString("Mail");
                 Boolean utilisateurIsAdmin = resultats.getBoolean("isAdmin");
                 
-                // Création de l'objet Utilisateur avec les données récupérées
+                //Création de l'objet Utilisateur avec les données récupérées
                 utilisateur = new Utilisateur(utilisateurId, utilisateurLogin, utilisateurPassword, utilisateurName, utilisateurMail, utilisateurIsAdmin);
             }
         }
@@ -177,10 +177,10 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
      */
     public Utilisateur modifier(Utilisateur utilisateur) {
         try {
-            // connexion
+            //connexion
             Connection connexion = daoFactory.getConnection();
             
-            // Préparation de la requête avec des paramètres
+            //Préparation de la requête avec des paramètres
             PreparedStatement preparedStatement = connexion.prepareStatement(
                 "UPDATE Utilisateur SET Login = ?, Password = ?, Name = ?, Mail = ?, isAdmin = ? WHERE UtilisateurID = ?");
             
@@ -191,7 +191,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             preparedStatement.setBoolean(5, utilisateur.isAdmin());
             preparedStatement.setInt(6, utilisateur.getutilisateurId());
 
-            // Exécution de la requête UPDATE pour modifier l'utilisateur dans la base de données
+            //Exécution de la requête UPDATE pour modifier l'utilisateur dans la base de données
             preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
@@ -211,15 +211,15 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
      */
     public void supprimer(Utilisateur utilisateur) {
         try {
-            // connexion
+            //connexion
             Connection connexion = daoFactory.getConnection();
             
-            // Préparation de la requête avec un paramètre
+            //Préparation de la requête avec un paramètre
             PreparedStatement preparedStatement = connexion.prepareStatement(
                 "DELETE FROM Utilisateur WHERE UtilisateurID = ?");
             preparedStatement.setInt(1, utilisateur.getutilisateurId());
 
-            // Exécution de la requête DELETE pour supprimer l'utilisateur dans la base de données
+            //Exécution de la requête DELETE pour supprimer l'utilisateur dans la base de données
             preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
