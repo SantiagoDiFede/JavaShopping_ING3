@@ -174,16 +174,7 @@ public MagasinControlleur allerMagasin() {
         System.out.println("Bienvenue dans le magasin !");
         
         // Créer une nouvelle instance de MagasinControlleur
-        MagasinControlleur magasinControlleur = new MagasinControlleur();
-        
-        // Initialiser le daoFactory dans MagasinControlleur
-        // Cette étape est nécessaire car votre classe MagasinControlleur 
-        // initialise les DAOs avant d'initialiser daoFactory
-        magasinControlleur.daoFactory = this.daoFactory;
-        
-        // Réinitialiser les DAOs avec le daoFactory correct
-        magasinControlleur.produitDao = new ProduitDaoImpl(this.daoFactory);
-        magasinControlleur.utilisateurDao = new UtilisateurDaoImpl(this.daoFactory);
+        MagasinControlleur magasinControlleur = new MagasinControlleur(daoFactory,utilisateurConnecte);
         
         return magasinControlleur;
         
