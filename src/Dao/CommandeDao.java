@@ -41,5 +41,13 @@ public interface CommandeDao {
      */
     public void supprimer (int commandeId);
 
+/**
+ * Récupère toutes les commandes d'un utilisateur spécifique
+ * @param utilisateurId ID de l'utilisateur dont on veut récupérer les commandes
+ * @return Liste des commandes de l'utilisateur
+ */
+    public ArrayList<Commande> getCommandesUtilisateur(int utilisateurId);
+
+
 }
 

@@ -175,4 +175,50 @@ public class CommandeDaoImpl implements CommandeDao {
         }
 
     }
+
+    @Override
+/**
+ * Récupère toutes les commandes d'un utilisateur spécifique
+ * @param utilisateurId ID de l'utilisateur dont on veut récupérer les commandes
+ * @return Liste des commandes de l'utilisateur
+ */
+public ArrayList<Commande> getCommandesUtilisateur(int utilisateurId) {
+    //Liste vide pour stocker les commandes de l'utilisateur
+    ArrayList<Commande> listeCommandes = new ArrayList<Commande>();
+
+    try {
+        // connexion
+        Connection connexion = daoFactory.getConnection();
+        
+        //Selectionner toutes les commandes de l' utilisateur 
+        //et les trier par ordre decroissant pour avoir les commandes les plus récentes en premier
+        PreparedStatement preparedStatement = connexion.prepareStatement(
+            "SELECT * FROM Commande WHERE UtilisateurID = ? ORDER BY CommandeID DESC");
+        preparedStatement.setInt(1, utilisateurId);
+
+        
+        ResultSet resultats = preparedStatement.executeQuery();
+
+        //on parcours les resultats ligne par ligne
+        while (resultats.next()) {
+            // récupérer les champs de la table Commande dans la base de données
+            int commandeId = resultats.getInt("CommandeID");
+            int utilisId = resultats.getInt("UtilisateurID");
+            double prixTotal = resultats.getDouble("PrixTotal");
+            String statutCommande = resultats.getString("StatutCommande");
+
+            //nouvel objet de Commande avec ces champs en paramètres
+            Commande commande = new Commande(commandeId, utilisId, prixTotal, statutCommande);
+            
+            //ajouter cette commande à listeCommandes
+            listeCommandes.add(commande);
+        }
+    }
+    catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("Récupération des commandes de l'utilisateur impossible");
+    }
+
+    return listeCommandes;
+}
 }
