@@ -9,8 +9,21 @@ public class MagasinControlleur {
 
     DaoFactory daoFactory;
 
-    ProduitDaoImpl produitDao = new ProduitDaoImpl(daoFactory);
-    UtilisateurDaoImpl utilisateurDao = new UtilisateurDaoImpl(daoFactory);
+    ProduitDaoImpl produitDao;
+    UtilisateurDaoImpl utilisateurDao;
+    Utilisateur utilisateurConnecte;
+
+    /**
+     * Constructeur du contrôleur de magasin
+     * @param daoFactory Factory pour accéder aux DAO
+     */
+    public MagasinControlleur(DaoFactory daoFactory,Utilisateur utilisateur) {
+        this.daoFactory = daoFactory;
+        this.produitDao = new ProduitDaoImpl(daoFactory);
+        this.utilisateurDao = new UtilisateurDaoImpl(daoFactory);
+        this.utilisateurConnecte = utilisateur;
+    }
+
 
     public void GetInventaire() {
         produitDao.getAll();

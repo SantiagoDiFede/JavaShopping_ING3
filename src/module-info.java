@@ -6,5 +6,6 @@ module GUI.javafx_test {
 
 
     opens GUI.javafx_test to javafx.fxml;
+    opens Controller to javafx.fxml;
     exports GUI.javafx_test;
 }

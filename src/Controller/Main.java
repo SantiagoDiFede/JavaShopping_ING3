@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         // Initialisation de la factory DAO avec les paramètres de connexion à la base de données
         // Utilisation du nom correct de la base de données "Shopping_ING3" et pas de mot de passe
-        DaoFactory daoFactory = DaoFactory.getInstance("Shopping_ING3", "root", "");
+        DaoFactory daoFactory = DaoFactory.getInstance("shoppingjava", "root", "");
         
         // Création du contrôleur de connexion
         ConnexionControlleur connexionControlleur = new ConnexionControlleur(daoFactory);
@@ -32,23 +32,23 @@ public class Main {
             }
             
             switch (choix) {
-                case 1:
-                    // Inscription
-                    Utilisateur nouvelUtilisateur = connexionControlleur.inscription();
-                    if (nouvelUtilisateur != null) {
-                        // Si l'inscription réussit, on passe au menu client
-                        menuClient(daoFactory, nouvelUtilisateur);
-                    }
-                    break;
-                    
-                case 2:
-                    // Connexion
-                    Utilisateur utilisateurConnecte = connexionControlleur.connexion();
-                    if (utilisateurConnecte != null) {
-                        // Si la connexion réussit, on passe au menu client
-                        menuClient(daoFactory, utilisateurConnecte);
-                    }
-                    break;
+//                case 1:
+//                    // Inscription
+//                    Utilisateur nouvelUtilisateur = connexionControlleur.inscription();
+//                    if (nouvelUtilisateur != null) {
+//                        // Si l'inscription réussit, on passe au menu client
+//                        menuClient(daoFactory, nouvelUtilisateur);
+//                    }
+//                    break;
+//
+//                case 2:
+//                    // Connexion
+//                    Utilisateur utilisateurConnecte = connexionControlleur.connexion();
+//                    if (utilisateurConnecte != null) {
+//                        // Si la connexion réussit, on passe au menu client
+//                        menuClient(daoFactory, utilisateurConnecte);
+//                    }
+//                    break;
                     
                 case 3:
                     System.out.println("Au revoir !");
