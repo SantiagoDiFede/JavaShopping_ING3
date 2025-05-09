@@ -79,7 +79,7 @@ public class CommandeDaoImpl implements CommandeDao {
             String statutCommande = commande.getStatutCommande();
 
             // Exécution de la requête INSERT pour ajouter le commande dans la base de données
-            statement.executeUpdate("INSERT INTO Commande (commandeID, utilisateurID, prixTotal, statutCommande) VALUES ('"+ utilisateurId +"', '"+ prixTotal +"', '"+ statutCommande +"')");
+            statement.executeUpdate("INSERT INTO Commande (utilisateurID, prixTotal, statutCommande) VALUES ('"+ utilisateurId +"', '"+ prixTotal +"', '"+ statutCommande +"')");
         }
         catch (SQLException e) {
             e.printStackTrace();
