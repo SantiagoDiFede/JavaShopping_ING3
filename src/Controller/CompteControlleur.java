@@ -159,5 +159,39 @@ public ArrayList<Commande> GetHistorique() {
         return null;
     }
 }
+/**
+ * Accède au magasin pour consulter les produits et passer des commandes
+ * @return Le contrôleur du magasin ou null en cas d'erreur
+ */
+public MagasinControlleur allerMagasin() {
+    try {
+        //Verifier que l'utilisateur est connecté
+        if (utilisateurConnecte == null) {
+            System.out.println("Vous devez être connecté pour accéder au magasin.");
+            return null;
+        }
+        
+        System.out.println("Bienvenue dans le magasin !");
+        
+        // Créer une nouvelle instance de MagasinControlleur
+        MagasinControlleur magasinControlleur = new MagasinControlleur();
+        
+        // Initialiser le daoFactory dans MagasinControlleur
+        // Cette étape est nécessaire car votre classe MagasinControlleur 
+        // initialise les DAOs avant d'initialiser daoFactory
+        magasinControlleur.daoFactory = this.daoFactory;
+        
+        // Réinitialiser les DAOs avec le daoFactory correct
+        magasinControlleur.produitDao = new ProduitDaoImpl(this.daoFactory);
+        magasinControlleur.utilisateurDao = new UtilisateurDaoImpl(this.daoFactory);
+        
+        return magasinControlleur;
+        
+    } catch (Exception e) {
+        System.out.println("Erreur lors de l'accès au magasin: " + e.getMessage());
+        e.printStackTrace();
+        return null;
+    }
+}
     
 }

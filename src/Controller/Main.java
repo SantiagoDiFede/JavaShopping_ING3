@@ -109,7 +109,7 @@ public class Main {
                     
                 case 3:
                     // Aller au magasin
-                    System.out.println("Fonctionnalité non implémentée .");
+                    MagasinControlleur magasinControlleur = clientControlleur.allerMagasin();
                     break;
                     
                 case 4:
