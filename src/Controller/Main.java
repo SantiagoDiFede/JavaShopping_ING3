@@ -51,7 +51,7 @@ public class Main {
                     break;
                     
                 case 3:
-                    System.out.println("Au revoir !");
+                    System.out.println("Au revoir.");
                     break;
                     
                 default:
@@ -163,13 +163,13 @@ public class Main {
                     ArrayList<Produit> produits = magasinControlleur.GetInventaire();
                     System.out.println("\n=== PRODUITS DISPONIBLES ===");
                     for (Produit produit : produits) {
-                        System.out.println(produit.getProduitId() + " - " + produit.getNom() + 
-                                          " - Prix: " + produit.getPrix() + " Euros");
+                        System.out.println(produit.getProduitId() + " - " + produit.getNom() + " - Prix: " +
+                        produit.getPrix() + " Euros");
                         
                         //Afficher le prix réduit si disponible
                         if (produit.getPrixReduction() > 0 && produit.getQteReduction() > 0) {
                             System.out.println("   Promotion: " + produit.getPrixReduction() + 
-                                              " Euros à partir de " + produit.getQteReduction() + " unités");
+                            " Euros à partir de " + produit.getQteReduction() + " unités");
                         }
                     }
                     break;
@@ -208,7 +208,7 @@ public class Main {
                     break;
                     
                 case 8:
-                    System.out.println("Retour au menu client...");
+                    System.out.println("Retour au menu client.");
                     return;// Retour au menu client
                     
                 default:
