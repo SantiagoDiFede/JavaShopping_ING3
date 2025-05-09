@@ -14,7 +14,7 @@ import Model.Utilisateur;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ClientControlleur {
+public class CompteControlleur {
     
     private DaoFactory daoFactory;
     private UtilisateurDaoImpl utilisateurDao;
@@ -30,7 +30,7 @@ public class ClientControlleur {
      * @param utilisateur Utilisateur connecté
      * 
      */
-    public ClientControlleur(DaoFactory daoFactory, Utilisateur utilisateur) {
+    public CompteControlleur(DaoFactory daoFactory, Utilisateur utilisateur) {
         this.daoFactory = daoFactory;
         this.utilisateurDao = new UtilisateurDaoImpl(daoFactory);
         this.commandeDao = new CommandeDaoImpl(daoFactory);

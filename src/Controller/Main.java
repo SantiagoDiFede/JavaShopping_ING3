@@ -71,7 +71,7 @@ public class Main {
      */
     private static void menuClient(DaoFactory daoFactory, Utilisateur utilisateur) {
         // Création du contrôleur client avec l'utilisateur connecté
-        ClientControlleur clientControlleur = new ClientControlleur(daoFactory, utilisateur);
+        CompteControlleur clientControlleur = new CompteControlleur(daoFactory, utilisateur);
         
         Scanner scanner = new Scanner(System.in);
         int choix = 0;
