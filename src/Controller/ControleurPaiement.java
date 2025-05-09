@@ -38,13 +38,13 @@ public class ControleurPaiement {
      */
     public double afficherPanier() {
         try {
-            // Vérifier que l'utilisateur est connecté
+            //Vérifier que l'utilisateur est connecté
             if (utilisateurConnecte == null) {
                 System.out.println("Vous devez être connecté pour voir votre panier.");
                 return 0;
             }
             
-            // Récupérer le panier du MagasinControlleur
+            //Récupérer le panier du MagasinControlleur
             Map<Integer, Integer> panier = magasinControlleur.getPanier();
             
             // Vérifier si le panier est vide
@@ -58,7 +58,7 @@ public class ControleurPaiement {
             
             double total = 0;
             
-            // Parcourir les produits du panier
+            //Parcourir les produits du panier
             for (Map.Entry<Integer, Integer> entry : panier.entrySet()) {
                 int produitId = entry.getKey();
                 int quantite = entry.getValue();
@@ -68,7 +68,7 @@ public class ControleurPaiement {
                     double prixUnitaire = produit.getPrix();
                     double prixTotal;
                     
-                    // Appliquer le prix réduit si la quantité est suffisante
+                    //Appliquer le prix réduit 
                     if (produit.getPrixReduction() > 0 && produit.getQteReduction() > 0 && quantite >= produit.getQteReduction()) {
                         prixUnitaire = produit.getPrixReduction();
                         System.out.println(quantite + "x " + produit.getNom() + 
