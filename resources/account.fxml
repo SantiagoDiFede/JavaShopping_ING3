@@ -7,145 +7,50 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ScrollPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="Controller.CompteControlleur" xmlns:fx="http://javafx.com/fxml/1">
+
+   <!-- Partie gauche : historique des commandes -->
    <left>
-      <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox spacing="10.0" BorderPane.alignment="TOP_LEFT">
+         <padding>
+            <Insets left="20.0" top="20.0" />
+         </padding>
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="131.0" prefWidth="600.0">
-               <children>
-                  <Label prefHeight="59.0" prefWidth="362.0" text="SHOPPING.JAVA">
-                     <font>
-                        <Font name="System Bold" size="41.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="BOTTOM_LEFT" text="VOTRE COMPTE">
-                     <font>
-                        <Font name="System Bold" size="22.0" />
-                     </font>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets left="10.0" />
-               </VBox.margin>
-            </HBox>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="389.0" prefWidth="508.0" styleClass="card" stylesheets="@styles.css">
-               <VBox.margin>
-                  <Insets left="40.0" top="30.0" />
-               </VBox.margin>
-               <children>
-                  <VBox prefHeight="58.0" prefWidth="508.0">
-                     <children>
-                        <Label prefHeight="50.0" prefWidth="197.0" text="COMMANDE">
-                           <font>
-                              <Font name="System Bold" size="21.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="50.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
+            <!-- Titre -->
+            <Label text="Historique des commandes" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+            <!-- Scroll des commandes -->
+            <ScrollPane prefHeight="500.0" prefWidth="508.0" fitToWidth="true">
+               <content>
+                  <VBox fx:id="commandesContainer" spacing="12.0">
+                     <padding>
+                        <Insets left="10.0" top="10.0" right="10.0" bottom="10.0" />
+                     </padding>
                   </VBox>
-                  <VBox prefHeight="273.0" prefWidth="508.0" spacing="12.0">
-                     <children>
-                        <VBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="242.0">
-                           <children>
-                              <Label prefHeight="27.0" prefWidth="223.0" text=" - #n°Commande">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="40.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Button mnemonicParsing="false" text="Facture n°commande">
-                                 <VBox.margin>
-                                    <Insets left="150.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="242.0" stylesheets="@styles.css">
-                           <children>
-                              <Label prefHeight="27.0" prefWidth="223.0" text=" - #n°Commande">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="40.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Button mnemonicParsing="false" text="Facture n°commande">
-                                 <VBox.margin>
-                                    <Insets left="150.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="242.0">
-                           <children>
-                              <Label prefHeight="27.0" prefWidth="223.0" text=" - #n°Commande">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="40.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Button mnemonicParsing="false" text="Facture n°commande">
-                                 <VBox.margin>
-                                    <Insets left="150.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="242.0">
-                           <children>
-                              <Label prefHeight="27.0" prefWidth="223.0" text=" - #n°Commande">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="40.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Button mnemonicParsing="false" text="Facture n°commande">
-                                 <VBox.margin>
-                                    <Insets left="150.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="242.0">
-                           <children>
-                              <Label prefHeight="27.0" prefWidth="223.0" text=" - #n°Commande">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="40.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Button mnemonicParsing="false" text="Facture n°commande">
-                                 <VBox.margin>
-                                    <Insets left="150.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
+               </content>
+            </ScrollPane>
          </children>
       </VBox>
    </left>
+
+   <!-- Partie droite : informations compte -->
    <right>
-      <VBox prefHeight="600.0" prefWidth="559.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="600.0" prefWidth="559.0" BorderPane.alignment="CENTER" spacing="15.0">
+         <padding>
+            <Insets top="20.0" right="20.0" />
+         </padding>
          <children>
+            <!-- Bouton retour au magasin -->
+            <HBox alignment="TOP_RIGHT">
+               <Button fx:id="retourMagasinButton" text="Retour au magasin" />
+            </HBox>
+
+            <!-- Informations utilisateur -->
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="265.0" prefWidth="422.0" spacing="20.0" styleClass="card" stylesheets="@styles.css">
                <VBox.margin>
-                  <Insets left="30.0" top="180.0" />
+                  <Insets left="30.0" top="20.0" />
                </VBox.margin>
                <children>
                   <VBox prefHeight="70.0" prefWidth="422.0" spacing="5.0">
@@ -158,7 +63,7 @@
                               <Insets left="20.0" />
                            </VBox.margin>
                         </Label>
-                        <Button mnemonicParsing="false" text="modifier">
+                        <Button fx:id="modifierButton" mnemonicParsing="false" text="modifier">
                            <font>
                               <Font name="System Bold" size="11.0" />
                            </font>
@@ -170,29 +75,23 @@
                   </VBox>
                   <VBox prefHeight="114.0" prefWidth="422.0" spacing="15.0" stylesheets="@styles.css">
                      <children>
-                        <Label prefHeight="20.0" prefWidth="130.0" text="Nom d'utilisateur : ">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="20.0" prefWidth="130.0" text="Email: ">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="20.0" prefWidth="130.0" text="Mot de passe">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
+                        <Label text="Nom d'utilisateur : " />
+                        <TextField fx:id="nomUtilisateurField" promptText="Nom d'utilisateur" />
+                        <Label text="Email: " />
+                        <TextField fx:id="emailField" promptText="Email" />
+                        <Label text="Mot de passe" />
+                        <TextField fx:id="passwordField" promptText="Mot de passe" />
                      </children>
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
                   </VBox>
-                  <Button mnemonicParsing="false" text="Déconnexion">
+                  <Button fx:id="deconnexionButton" mnemonicParsing="false" text="Déconnexion">
+                     <padding>
+                        <Insets left="10.0" top="5.0" right="10.0" bottom="5.0" />
+                     </padding>
                      <VBox.margin>
-                        <Insets left="30.0" />
+                        <Insets left="30.0" top="20.0" bottom="20.0" />
                      </VBox.margin>
                      <font>
                         <Font name="System Bold" size="11.0" />
@@ -203,4 +102,5 @@
          </children>
       </VBox>
    </right>
+
 </BorderPane>
