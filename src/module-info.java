@@ -1,11 +1,11 @@
-module GUI.javafx_test {
+module GUI.javafx {
     requires javafx.controls;
     requires javafx.fxml;
     requires annotations;
     requires java.sql;
 
 
-    opens GUI.javafx_test to javafx.fxml;
+    opens GUI.javafx to javafx.fxml;
     opens Controller to javafx.fxml;
-    exports GUI.javafx_test;
+    exports GUI.javafx;
 }

@@ -32,7 +32,7 @@ public class CommandeDaoImpl implements CommandeDao {
         */
         try {
             // connexion
-            Connection connexion = daoFactory.getConnection();;
+            Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
             // récupération des commandes de la base de données avec la requete SELECT
@@ -79,7 +79,7 @@ public class CommandeDaoImpl implements CommandeDao {
             String statutCommande = commande.getStatutCommande();
 
             // Exécution de la requête INSERT pour ajouter le commande dans la base de données
-            statement.executeUpdate("INSERT INTO Commande (commandeID, utilisateurID, prixTotal, statutCommande) VALUES ('"+ utilisateurId +"', '"+ prixTotal +"', '"+ statutCommande +"')");
+            statement.executeUpdate("INSERT INTO Commande (utilisateurID, prixTotal, statutCommande) VALUES ('"+ utilisateurId +"', '"+ prixTotal +"', '"+ statutCommande +"')");
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -98,7 +98,7 @@ public class CommandeDaoImpl implements CommandeDao {
         Commande commande = null;
         try {
             // connexion
-            Connection connexion = daoFactory.getConnection();;
+            Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
             // récupération des commandes de la base de données avec la requete SELECT
@@ -138,7 +138,7 @@ public class CommandeDaoImpl implements CommandeDao {
 
         try {
             // connexion
-            Connection connexion = daoFactory.getConnection();;
+            Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
             // Exécution de la requête UPDATE pour modifier le commande dans la base de données
@@ -162,7 +162,7 @@ public class CommandeDaoImpl implements CommandeDao {
     public void supprimer (int commandeId) {
         try {
             // connexion
-            Connection connexion = daoFactory.getConnection();;
+            Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
             // Exécution de la requête DELETE pour supprimer le commande dans la base de données
@@ -220,5 +220,42 @@ public ArrayList<Commande> getCommandesUtilisateur(int utilisateurId) {
     }
 
     return listeCommandes;
-}
+    }
+    /**
+     * Récupère la dernière commande d'un utilisateur spécifique
+     * @param utilisateurId ID de l'utilisateur dont on veut récupérer la dernière commande
+     *
+     */
+    public Commande getLastCommande(int utilisateurId) {
+        Commande derniereCommande = null;
+
+        try {
+            // connexion
+            Connection connexion = daoFactory.getConnection();
+
+            //Selectionner la dernière commande de l' utilisateur
+            PreparedStatement preparedStatement = connexion.prepareStatement(
+                    "SELECT * FROM Commande WHERE UtilisateurID = ? ORDER BY CommandeID DESC LIMIT 1");
+            preparedStatement.setInt(1, utilisateurId);
+
+            ResultSet resultats = preparedStatement.executeQuery();
+
+            //on parcours les resultats ligne par ligne
+            if (resultats.next()) {
+                // récupérer les champs de la table Commande dans la base de données
+                int commandeId = resultats.getInt("CommandeID");
+                int utilisId = resultats.getInt("UtilisateurID");
+                double prixTotal = resultats.getDouble("PrixTotal");
+                String statutCommande = resultats.getString("StatutCommande");
+
+                //nouvel objet de Commande avec ces champs en paramètres
+                derniereCommande = new Commande(commandeId, utilisId, prixTotal, statutCommande);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Récupération de la dernière commande de l'utilisateur impossible");
+        }
+
+        return derniereCommande;
+    }
 }

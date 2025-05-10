@@ -32,7 +32,7 @@ public class ProduitDaoImpl implements ProduitDao {
         */
         try {
             // connexion
-            Connection connexion = daoFactory.getConnection();;
+            Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
             // récupération des produits de la base de données avec la requete SELECT
@@ -46,7 +46,7 @@ public class ProduitDaoImpl implements ProduitDao {
                 double produitPrix = resultats.getDouble(3);
                 double produitPrixReduction = resultats.getDouble(4);
                 int produitQteReduction = resultats.getInt(5);
-                String produitImage = resultats.getString(2);
+                String produitImage = resultats.getString(6);
 
 
                 //instancier un objet de Produit avec ces 3 champs en paramètres
@@ -67,12 +67,12 @@ public class ProduitDaoImpl implements ProduitDao {
 
     /**
      Ajouter un nouveau produit en paramètre dans la base de données
-     @params : produit = objet de Produit à insérer dans la base de données
+     @param : produit = objet de Produit à insérer dans la base de données
      */
     public void ajouter(Produit produit){
         try {
             // connexion
-            Connection connexion = daoFactory.getConnection();;
+            Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
             // récupération du nom et prix de l'objet product en paramètre
@@ -104,7 +104,6 @@ public class ProduitDaoImpl implements ProduitDao {
         try {
             // connexion
             Connection connexion = daoFactory.getConnection();
-            ;
             Statement statement = connexion.createStatement();
 
             // récupération des produits de la base de données avec la requete SELECT
@@ -140,7 +139,6 @@ public class ProduitDaoImpl implements ProduitDao {
         try {
             // connexion
             Connection connexion = daoFactory.getConnection();
-            ;
             Statement statement = connexion.createStatement();
 
             // récupération des produits de la base de données avec la requete SELECT
@@ -176,7 +174,7 @@ public class ProduitDaoImpl implements ProduitDao {
     public Produit modifier(Produit produit) {
         try {
             // connexion
-            Connection connexion = daoFactory.getConnection();;
+            Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
             // récupération du nom et prix de l'objet produit en paramètre
@@ -207,7 +205,7 @@ public class ProduitDaoImpl implements ProduitDao {
     public void supprimer (int produitId) {
         try {
             // connexion
-            Connection connexion = daoFactory.getConnection();;
+            Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
             // Exécution de la requête DELETE pour supprimer le produit dans la base de données

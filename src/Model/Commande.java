@@ -33,8 +33,6 @@ public class Commande {
     public double getPrixTotal() {
         return prixTotal;
     }
-    public String getStatutCommande() {
-        return StatutCommande;
-    }
+    public String getStatutCommande() {return StatutCommande;}
 }
 

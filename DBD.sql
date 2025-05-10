@@ -39,7 +39,7 @@ CREATE TABLE `Produit` (
                            `Prix` double  NOT NULL ,
                            `PrixReduction` double  ,
                            `QteReduction` int  ,
-                           `Image` varchar(1000)  NOT NULL ,
+                           `Image` LONGBLOB  NOT NULL ,
                            PRIMARY KEY (
                                         `ProduitID`
                                ),

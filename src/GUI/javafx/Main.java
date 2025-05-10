@@ -1,4 +1,4 @@
-package GUI.javafx_test;
+package GUI.javafx;
 
 import Controller.ConnexionControlleur;
 import Dao.DaoFactory;
@@ -22,7 +22,6 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
         loader.setController(controller);
         Parent root = loader.load();
-
 
 
         Scene scene = new Scene(root, 1115, 600);

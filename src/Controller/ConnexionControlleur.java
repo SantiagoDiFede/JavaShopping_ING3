@@ -149,8 +149,9 @@ public class ConnexionControlleur {
     public void  allerMagasin(DaoFactory daoFactory, Utilisateur utilisateur) {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/shop.fxml"));
-            loader.setController(new MagasinControlleur(daoFactory, utilisateur));
             Parent root = loader.load();
+            MagasinControlleur controller = loader.getController();
+            controller.initData(daoFactory, utilisateur); // injecte les données après le load
             Stage currentStage = (Stage) loginButton.getScene().getWindow(); // ou un autre bouton/label
             currentStage.setScene(new Scene(root));
             currentStage.setTitle("Page du magasin");

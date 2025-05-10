@@ -72,20 +72,19 @@ public class CommandeLigneDaoImpl implements CommandeLigneDao {
         try {
             // connexion
             Connection connexion = daoFactory.getConnection();
-            PreparedStatement preparedStatement = connexion.prepareStatement(
-                "INSERT INTO CommandeLigne (CommandeID, ProduitID, Qte) VALUES (?, ?, ?)");
+            Statement statement = connexion.createStatement();
 
-            // récupération du nom et prix de l'objet commande en paramètre
-            preparedStatement.setInt(1, commandeLigne.getCommandeId());
-            preparedStatement.setInt(2, commandeLigne.getProduitId());
-            preparedStatement.setInt(3, commandeLigne.getQte());
+            int CommandeId = commandeLigne.getCommandeId();
+            int ProduitId = commandeLigne.getProduitId();
+            int Qte = commandeLigne.getQte();
 
-            // Exécution de la requête INSERT pour ajouter le commande dans la base de données
-            preparedStatement.executeUpdate();
+            statement.executeUpdate("INSERT INTO CommandeLigne (CommandeID, ProduitID, Qte) VALUES ('" + CommandeId + "', '" + ProduitId + "', '" + Qte + "')");
+
+
         }
         catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Ajout du commande impossible");
+            System.out.println("Ajout de la commande impossible");
         }
 
     }
