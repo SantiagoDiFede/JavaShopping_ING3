@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Contrôleur gérant l'affichage du panier et le processus de paiement
@@ -45,20 +46,36 @@ public class PanierControlleur {
     private PasswordField cvcPayment;
     @FXML
     private TextField dateExp;
+
+    @FXML
+    private VBox paying;
     
 
     public PanierControlleur() {
 
     }
 
-    public void initData(DaoFactory daoFactory, Utilisateur utilisateurConnecte, Utilisateur utilisateur) {
+    public void initData(DaoFactory daoFactory, Utilisateur utilisateurConnecte, Utilisateur utilisateur, int commandeId) {
         this.daoFactory = daoFactory;
         this.commandeDao = new CommandeDaoImpl(daoFactory);
         this.commandeLigneDao = new CommandeLigneDaoImpl(daoFactory);
         this.produitDao = new ProduitDaoImpl(daoFactory);
         this.utilisateurConnecte = utilisateurConnecte;
         this.utilisateur = utilisateur;
+        afficherPanier(commandeId);
+        paying.setVisible(false);
+
+    }
+
+    public void initData(DaoFactory daoFactory, Utilisateur utilisateurConnecte, Utilisateur utilisateurConnecte1) {
+        this.daoFactory = daoFactory;
+        this.commandeDao = new CommandeDaoImpl(daoFactory);
+        this.commandeLigneDao = new CommandeLigneDaoImpl(daoFactory);
+        this.produitDao = new ProduitDaoImpl(daoFactory);
+        this.utilisateurConnecte = utilisateurConnecte;
+        this.utilisateur = utilisateurConnecte1;
         afficherPanierEnCours();
+        paying.setVisible(true);
     }
 
     public void afficherPanierEnCours() {
@@ -97,24 +114,90 @@ public class PanierControlleur {
             Button moins = new Button("-");
             Label quantite = new Label(String.valueOf(ligne.getQte()));
             Button plus = new Button("+");
+            moins.setDisable(false);
+            plus.setDisable(false);
 
-            moins.setOnAction(e -> {
-                int qte = ligne.getQte();
-                if (qte > 1) {
-                    ligne.setQte(qte - 1);
-                    commandeLigneDao.updateQte(ligne.getCommandeLigneId(), qte - 1);
-                } else {
-                    commandeLigneDao.supprimer(ligne.getCommandeLigneId());
-                }
-                rafraichirPanier();
-            });
+                moins.setOnAction(e -> {
+                    int qte = ligne.getQte();
+                    if (qte > 1) {
+                        ligne.setQte(qte - 1);
+                        commandeLigneDao.updateQte(ligne.getCommandeLigneId(), qte - 1);
+                    } else {
+                        commandeLigneDao.supprimer(ligne.getCommandeLigneId());
+                    }
+                    rafraichirPanier();
+                });
 
-            plus.setOnAction(e -> {
-                int qte = ligne.getQte();
-                ligne.setQte(qte + 1);
-                commandeLigneDao.updateQte(ligne.getCommandeLigneId(), qte + 1);
-                rafraichirPanier();
-            });
+                plus.setOnAction(e -> {
+                    int qte = ligne.getQte();
+                    ligne.setQte(qte + 1);
+                    commandeLigneDao.updateQte(ligne.getCommandeLigneId(), qte + 1);
+                    rafraichirPanier();
+                });
+
+
+            quantiteBox.getChildren().addAll(moins, quantite, plus);
+
+            // Prix total
+
+            int qteTotale = ligne.getQte();
+            int seuil = produit.getQteReduction();
+            double prixNormal = produit.getPrix();
+            double prixReduit = produit.getPrixReduction();
+
+            int nbLots = seuil > 0 ? qteTotale / seuil : 0;
+            int reste = seuil > 0 ? qteTotale % seuil : qteTotale;
+
+            double total = nbLots * seuil * prixReduit + reste * prixNormal;
+            Label prixTotal = new Label("Total : " + String.format("%.2f", total) + " €");
+            prixTotal.setFont(new Font("System Bold", 15));
+
+            produitBox.getChildren().addAll(imageView, infoBox, quantiteBox, prixTotal);
+            produitsContainer.getChildren().add(produitBox);
+        }
+        mettreAJourTotal(lignes);
+    }
+
+    public void afficherPanier(int commandeId) {
+        Commande panier = commandeDao.chercher(commandeId);
+        if (panier == null) return;
+
+        List<CommandeLigne> lignes = commandeLigneDao.getAllFromCommande(panier.getCommandeId());
+        produitsContainer.getChildren().clear();
+
+        for (CommandeLigne ligne : lignes) {
+            Produit produit = produitDao.chercher(ligne.getProduitId());
+
+            // Créer dynamiquement l'élément produit
+            HBox produitBox = new HBox(20);
+            produitBox.getStyleClass().add("card");
+            produitBox.setPadding(new Insets(10, 10, 10, 10));
+
+            // Image
+            ImageView imageView = new ImageView();
+            System.out.println("Image path: " + produit.getImage());
+            Image image = new Image(getClass().getResource("/" + produit.getImage()).toExternalForm());
+            imageView.setImage(image);
+            imageView.setFitHeight(95);
+            imageView.setFitWidth(128);
+
+            // Info produit
+            VBox infoBox = new VBox(10);
+            Label nomLabel = new Label(produit.getNom());
+            nomLabel.setFont(new Font("System Bold", 23));
+            Label prixUnitaire = new Label("Prix unitaire : " + produit.getPrix() + " €");
+
+            infoBox.getChildren().addAll(nomLabel, prixUnitaire);
+
+            // Quantité
+            HBox quantiteBox = new HBox(10);
+            Button moins = new Button("-");
+            Label quantite = new Label(String.valueOf(ligne.getQte()));
+            Button plus = new Button("+");
+            if(panier.getStatutCommande() != "En cours") {
+                moins.setDisable(true);
+                plus.setDisable(true);
+            }
 
             quantiteBox.getChildren().addAll(moins, quantite, plus);
 
@@ -199,4 +282,6 @@ public class PanierControlleur {
             e.printStackTrace();
         }
     }
+
+
 }

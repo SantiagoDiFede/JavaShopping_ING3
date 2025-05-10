@@ -24,7 +24,7 @@
       </ScrollPane>
    </left>
    <right>
-      <VBox prefHeight="600.0" prefWidth="502.0" BorderPane.alignment="CENTER">
+      <VBox  prefHeight="600.0" prefWidth="502.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="502.0">
                <padding>
@@ -46,7 +46,7 @@
                   <Insets top="30.0" />
                </VBox.margin>
             </Label>
-            <VBox alignment="CENTER" prefHeight="424.0" prefWidth="318.0" spacing="11.0" styleClass="card" stylesheets="@styles.css">
+            <VBox fx:id="paying" alignment="CENTER" prefHeight="424.0" prefWidth="318.0" spacing="11.0" styleClass="card" stylesheets="@styles.css">
                <children>
                   <Label alignment="CENTER" prefHeight="76.0" prefWidth="205.0" text="CARTE BANCAIRE">
                      <font>

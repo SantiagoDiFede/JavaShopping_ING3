@@ -25,10 +25,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class CompteControlleur {
 
@@ -170,26 +167,54 @@ public class CompteControlleur {
 
         // Trier les commandes les plus récentes en premier
         commandes.sort(Comparator.comparing(Commande::getCommandeId).reversed());
+        for (int i = 0; i < commandes.size(); i++) {
+            if (Objects.equals(commandes.get(i).getStatutCommande(), "En cours")) {
+                commandes.remove(i);
+            }
+        }
         int commandeNumero = commandes.size();
 
         for (Commande commande : commandes) {
+
+
+
 
             VBox commandeBox = new VBox();
             commandeBox.setAlignment(Pos.CENTER_LEFT);
             commandeBox.setSpacing(5);
             commandeBox.setPadding(new Insets(5));
 
-            Label label = new Label(" - #" + commandeNumero);
+            Label label = new Label(" - Commande #" + commandeNumero);
             label.setFont(new Font(18));
             commandeNumero--;
 
             Button btn = new Button("Voir Facture");
-//            btn.setOnAction(e -> afficherFacture(commande)); // ta méthode personnalisée
+            btn.setOnAction(e -> afficherFacture(commande.getCommandeId())); // ta méthode personnalisée
             btn.setPadding(new Insets(5, 10, 5, 10));
 
 
             commandeBox.getChildren().addAll(label, btn);
             commandesContainer.getChildren().add(commandeBox);
+        }
+    }
+
+    /**
+     * Affiche la facture de la commande
+     *
+     * @param commandeId L'id de la commande dont on veut afficher la facture
+     */
+    public void afficherFacture(int commandeId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/payment.fxml"));
+            Parent root = loader.load();
+            PanierControlleur controller = loader.getController();
+            controller.initData(daoFactory, utilisateurConnecte, utilisateurConnecte, commandeId); // injecte les données après le load
+            Stage currentStage = (Stage) emailField.getScene().getWindow(); // ou un autre bouton/label
+            currentStage.setScene(new Scene(root));
+            currentStage.setTitle("Page de facture n°" + commandeId);
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
