@@ -30,6 +30,10 @@ public class MagasinControlleur {
     @FXML
     private GridPane produitsContainer;
 
+    @FXML private Label adminButton;
+    @FXML private Label compteLabel;
+    @FXML private Label panierLabel;
+
 
     public MagasinControlleur() {
         // JavaFX a besoin de ce constructeur pour charger le FXML
@@ -45,6 +49,9 @@ public class MagasinControlleur {
         this.utilisateurDao = new UtilisateurDaoImpl(daoFactory);
         this.utilisateurConnecte = utilisateur;
         afficherProduits();
+        if(utilisateurConnecte.isAdmin()) {
+            adminButton.setVisible(true);
+        }
     }
 
 
@@ -57,9 +64,7 @@ public class MagasinControlleur {
     }
 
     @FXML
-    private void initialize() {
-        // appelée automatiquement, mais daoFactory peut être null ici
-    }
+    private void initialize() {}
 
     public void afficherProduits() {
         if (produitsContainer == null) {
@@ -126,4 +131,37 @@ public class MagasinControlleur {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void allerCompte() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/account.fxml"));
+            Parent root = loader.load();
+            CompteControlleur controller = loader.getController();
+            controller.initData(daoFactory, utilisateurConnecte, utilisateurConnecte); // injecte les données après le load
+            Stage currentStage = (Stage) compteLabel.getScene().getWindow(); // ou un autre bouton/label
+            currentStage.setScene(new Scene(root));
+            currentStage.setTitle("Page du compte");
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+//    @FXML
+//    private void allerPanier() {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/payment.fxml"));
+//            Parent root = loader.load();
+//            PanierControlleur controller = loader.getController();
+//            controller.initData(daoFactory, utilisateurConnecte); // injecte les données après le load
+//            Stage currentStage = (Stage) panierLabel.getScene().getWindow(); // ou un autre bouton/label
+//            currentStage.setScene(new Scene(root));
+//            currentStage.setTitle("Page du panier");
+//            currentStage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

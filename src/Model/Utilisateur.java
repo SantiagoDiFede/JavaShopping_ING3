@@ -36,6 +36,14 @@ public class Utilisateur {
     public String getutilisateurMail() { return utilisateurMail; }
     public Boolean isAdmin() { return isAdmin; }
 
+    // setters
+    public void setutilisateurPassword(String utilisateurPassword) { this.utilisateurPassword = utilisateurPassword; }
+    public void setutilisateurName(String utilisateurName) { this.utilisateurName = utilisateurName; }
+    public void setutilisateurMail(String utilisateurMail) { this.utilisateurMail = utilisateurMail; }
+    public void setAdmin(Boolean isAdmin) { this.isAdmin = isAdmin; }
+
+
+
 
 }
 

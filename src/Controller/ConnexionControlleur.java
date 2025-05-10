@@ -37,6 +37,15 @@ public class ConnexionControlleur {
         this.utilisateurDao = new UtilisateurDaoImpl(daoFactory);
     }
 
+    /**
+     *
+     * Constructeur par défaut
+     *
+     */
+    public ConnexionControlleur() {
+        // JavaFX a besoin de ce constructeur pour charger le FXML
+    }
+
     @FXML
     private TextField loginField;
 
