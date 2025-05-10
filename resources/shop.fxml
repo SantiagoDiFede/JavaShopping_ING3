@@ -30,14 +30,12 @@
 
             <HBox prefHeight="136.0" prefWidth="658.0" alignment="CENTER_RIGHT" spacing="20.0">
                <children>
-
                   <!-- Bouton ADMIN (visible si utilisateur est admin) -->
-                  <Label fx:id="adminLabel" text="ADMIN" visible="false" prefHeight="42.0" prefWidth="150.0" >
+                  <Label fx:id="adminLabel" text="ADMIN" visible="false" prefHeight="42.0" prefWidth="150.0" onMouseClicked="#allerAdmin" >
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-
                   <!-- Label COMPTE (cliquable) -->
                   <Label fx:id="compteLabel" text="COMPTE" prefHeight="42.0" prefWidth="150.0" onMouseClicked="#allerCompte">
                      <font>

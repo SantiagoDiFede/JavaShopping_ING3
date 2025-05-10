@@ -8,8 +8,6 @@ import Dao.ProduitDao;
 import Dao.ProduitDaoImpl;
 import Dao.UtilisateurDaoImpl;
 import Model.Commande;
-import Model.CommandeLigne;
-import Model.Produit;
 import Model.Utilisateur;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -67,7 +65,7 @@ public class CompteControlleur {
         this.commandeDao = new CommandeDaoImpl(daoFactory);
         this.commandeLigneDao = new CommandeLigneDaoImpl(daoFactory);
         this.produitDao = new ProduitDaoImpl(daoFactory);
-        this.commandes = commandeDao.getCommandesUtilisateur(utilisateurCompte.getutilisateurId());
+        this.commandes = commandeDao.getCommandesUtilisateur(utilisateurCompte.getUtilisateurId());
         afficherInformationsCompte();
         setCommandes(commandes);
 

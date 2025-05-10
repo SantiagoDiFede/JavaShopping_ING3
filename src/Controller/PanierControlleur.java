@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Contrôleur gérant l'affichage du panier et le processus de paiement
@@ -79,7 +78,7 @@ public class PanierControlleur {
     }
 
     public void afficherPanierEnCours() {
-        Commande panier = commandeDao.getLastCommande(utilisateur.getutilisateurId());
+        Commande panier = commandeDao.getLastCommande(utilisateur.getUtilisateurId());
         if (panier == null) return;
 
         List<CommandeLigne> lignes = commandeLigneDao.getAllFromCommande(panier.getCommandeId());
@@ -245,7 +244,7 @@ public class PanierControlleur {
     }
     @FXML
     private void payer() {
-        Commande panier = commandeDao.getLastCommande(utilisateur.getutilisateurId());
+        Commande panier = commandeDao.getLastCommande(utilisateur.getUtilisateurId());
         // Vérification des informations de paiement
         String nom = nomPayment.getText();
         String num = numPayment.getText();

@@ -189,7 +189,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             preparedStatement.setString(3, utilisateur.getutilisateurName());
             preparedStatement.setString(4, utilisateur.getutilisateurMail());
             preparedStatement.setBoolean(5, utilisateur.isAdmin());
-            preparedStatement.setInt(6, utilisateur.getutilisateurId());
+            preparedStatement.setInt(6, utilisateur.getUtilisateurId());
 
             //Exécution de la requête UPDATE pour modifier l'utilisateur dans la base de données
             preparedStatement.executeUpdate();
@@ -217,7 +217,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             //Préparation de la requête avec un paramètre
             PreparedStatement preparedStatement = connexion.prepareStatement(
                 "DELETE FROM Utilisateur WHERE UtilisateurID = ?");
-            preparedStatement.setInt(1, utilisateur.getutilisateurId());
+            preparedStatement.setInt(1, utilisateur.getUtilisateurId());
 
             //Exécution de la requête DELETE pour supprimer l'utilisateur dans la base de données
             preparedStatement.executeUpdate();

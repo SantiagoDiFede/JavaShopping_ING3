@@ -29,7 +29,7 @@ public class Utilisateur {
 
 
     // getters
-    public int getutilisateurId() { return utilisateurId; }
+    public int getUtilisateurId() { return utilisateurId; }
     public String getutilisateurLogin() { return utilisateurLogin; }
     public String getutilisateurPassword() { return utilisateurPassword; }
     public String getutilisateurName() { return utilisateurName; }

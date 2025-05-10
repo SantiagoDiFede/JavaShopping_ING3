@@ -23,7 +23,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class ProduitControlleur {
     @FXML
@@ -67,7 +66,7 @@ public class ProduitControlleur {
 
     @FXML
     private void ajouterAuPanier() throws InterruptedException {
-        List<Commande> commandes = commandeDao.getCommandesUtilisateur(utilisateurConnecte.getutilisateurId());
+        List<Commande> commandes = commandeDao.getCommandesUtilisateur(utilisateurConnecte.getUtilisateurId());
             for (Commande commande: commandes) {
                 if (Objects.equals(commande.getStatutCommande(), "En cours")) {
                     List< CommandeLigne> commandeLignes = commandeLigneDao.getAllFromCommande(commande.getCommandeId());
@@ -83,9 +82,9 @@ public class ProduitControlleur {
                     return;
                 }
             }
-            Commande commande = new Commande(utilisateurConnecte.getutilisateurId(), 0, "En cours");
+            Commande commande = new Commande(utilisateurConnecte.getUtilisateurId(), 0, "En cours");
             commandeDao.ajouter(commande);
-            commande = commandeDao.getLastCommande(utilisateurConnecte.getutilisateurId());
+            commande = commandeDao.getLastCommande(utilisateurConnecte.getUtilisateurId());
             CommandeLigne commandeLigne = new CommandeLigne(commande.getCommandeId(), produit.getProduitId(), 1);
             commandeLigneDao.ajouter(commandeLigne);
             System.out.println("Produit ajouté au panier !");

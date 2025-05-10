@@ -10,7 +10,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.control.ScrollPane?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="Controller.AdminControlleur" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <VBox prefHeight="600.0" prefWidth="574.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
@@ -85,48 +86,14 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="230.0" prefWidth="462.0" spacing="5.0" styleClass="card" stylesheets="@styles.css">
+            <ScrollPane fx:id="commandesScroll" prefHeight="230.0" prefWidth="462.0" fitToWidth="true">
+               <content>
+                  <VBox fx:id="commandesContainer" spacing="5.0" styleClass="card" stylesheets="@styles.css" />
+               </content>
                <VBox.margin>
                   <Insets left="50.0" />
                </VBox.margin>
-               <children>
-                  <Label text="COMMANDE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="5.0" top="7.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="462.0" spacing="100.0">
-                     <children>
-                        <Label text="#N°COMMANDE" />
-                        <Button mnemonicParsing="false" text="Facture" />
-                     </children>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="462.0" spacing="100.0">
-                     <children>
-                        <Label text="#N°COMMANDE" />
-                        <Button mnemonicParsing="false" text="Facture" />
-                     </children>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="462.0" spacing="100.0">
-                     <children>
-                        <Label text="#N°COMMANDE" />
-                        <Button mnemonicParsing="false" text="Facture" />
-                     </children>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </HBox>
-               </children>
-            </VBox>
+            </ScrollPane>
          </children>
       </VBox>
    </left>
@@ -136,125 +103,14 @@
             <Insets right="25.0" />
          </BorderPane.margin>
          <children>
-            <HBox maxWidth="-Infinity" prefHeight="70.0" prefWidth="515.0" spacing="230.0">
-               <children>
-                  <Label text="CLIENT">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="5.0" top="7.0" />
-                     </HBox.margin>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="70.0" prefWidth="198.0" spacing="50.0">
-                     <children>
-                        <Button mnemonicParsing="false">
-                           <graphic>
-                              <ImageView fitHeight="24.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@plus.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button mnemonicParsing="false">
-                           <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@set.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="466.0" spacing="150.0">
-               <children>
-                  <Label text="-ID_CLIENT" />
-                  <Button mnemonicParsing="false">
-                     <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icons8-close-50.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets left="50.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="466.0" spacing="150.0">
-               <children>
-                  <Label text="-ID_CLIENT" />
-                  <Button mnemonicParsing="false">
-                     <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icons8-close-50.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets left="50.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="466.0" spacing="150.0">
-               <children>
-                  <Label text="-ID_CLIENT" />
-                  <Button mnemonicParsing="false">
-                     <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icons8-close-50.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets left="50.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="466.0" spacing="150.0">
-               <children>
-                  <Label text="-ID_CLIENT" />
-                  <Button mnemonicParsing="false">
-                     <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icons8-close-50.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets left="50.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="466.0" spacing="150.0">
-               <children>
-                  <Label text="-ID_CLIENT" />
-                  <Button mnemonicParsing="false">
-                     <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icons8-close-50.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets left="50.0" />
-               </VBox.margin>
-            </HBox>
+            <ScrollPane fx:id="clientsScroll" prefHeight="470.0" prefWidth="536.0" fitToWidth="true">
+               <content>
+                  <VBox fx:id="clientsContainer" spacing="10.0" />
+               </content>
+               <BorderPane.margin>
+                  <Insets right="25.0" />
+               </BorderPane.margin>
+            </ScrollPane>
          </children>
       </VBox>
    </right>
