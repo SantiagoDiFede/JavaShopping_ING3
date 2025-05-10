@@ -46,7 +46,7 @@
                   </Label>
 
                   <!-- Label PANIER (cliquable) -->
-                  <Label fx:id="panierLabel" text="PANIER" prefHeight="42.0" prefWidth="150.0" >
+                  <Label fx:id="panierLabel" text="PANIER" prefHeight="42.0" prefWidth="150.0" onMouseClicked="#allerPanier" >
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>

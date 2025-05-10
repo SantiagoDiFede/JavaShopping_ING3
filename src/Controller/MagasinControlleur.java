@@ -63,8 +63,6 @@ public class MagasinControlleur {
         afficherProduits();
     }
 
-    @FXML
-    private void initialize() {}
 
     public void afficherProduits() {
         if (produitsContainer == null) {
@@ -83,7 +81,6 @@ public class MagasinControlleur {
             // Image
             ImageView imageView = new ImageView();
             try {
-                System.out.println("Image path:/" + produit.getImage());
                 Image image = new Image(getClass().getResource("/" + produit.getImage()).toExternalForm(), 150, 150, true, true); // largeur, hauteur
                 imageView.setImage(image);
             } catch (Exception e) {
@@ -149,19 +146,19 @@ public class MagasinControlleur {
 
     }
 
-//    @FXML
-//    private void allerPanier() {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/payment.fxml"));
-//            Parent root = loader.load();
-//            PanierControlleur controller = loader.getController();
-//            controller.initData(daoFactory, utilisateurConnecte); // injecte les données après le load
-//            Stage currentStage = (Stage) panierLabel.getScene().getWindow(); // ou un autre bouton/label
-//            currentStage.setScene(new Scene(root));
-//            currentStage.setTitle("Page du panier");
-//            currentStage.show();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    @FXML
+    private void allerPanier() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/payment.fxml"));
+            Parent root = loader.load();
+            PanierControlleur controller = loader.getController();
+            controller.initData(daoFactory, utilisateurConnecte,utilisateurConnecte); // injecte les données après le load
+            Stage currentStage = (Stage) panierLabel.getScene().getWindow(); // ou un autre bouton/label
+            currentStage.setScene(new Scene(root));
+            currentStage.setTitle("Page du panier");
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

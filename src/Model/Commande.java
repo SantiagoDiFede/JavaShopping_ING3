@@ -34,5 +34,19 @@ public class Commande {
         return prixTotal;
     }
     public String getStatutCommande() {return StatutCommande;}
+
+    // setters
+    public void setCommandeId(int commandeId) {
+        this.commandeId = commandeId;
+    }
+    public void setUtilisateurId(int utilisateurId) {
+        this.utilisateurId = utilisateurId;
+    }
+    public void setPrixTotal(double prixTotal) {
+        this.prixTotal = prixTotal;
+    }
+    public void setStatutCommande(String statutCommande) {
+        StatutCommande = statutCommande;
+    }
 }
 

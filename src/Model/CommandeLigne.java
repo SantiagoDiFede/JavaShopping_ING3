@@ -35,4 +35,18 @@ public class CommandeLigne {
     public int getQte() {
         return Qte;
     }
+
+    // setters
+    public void setCommandeLigneId(int commandeLigneId) {
+        CommandeLigneId = commandeLigneId;
+    }
+    public void setCommandeId(int commandeId) {
+        CommandeId = commandeId;
+    }
+    public void setProduitId(int produitId) {
+        ProduitId = produitId;
+    }
+    public void setQte(int qte) {
+        Qte = qte;
+    }
 }

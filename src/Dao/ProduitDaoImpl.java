@@ -117,7 +117,7 @@ public class ProduitDaoImpl implements ProduitDao {
                 double produitPrix = resultats.getDouble(3);
                 double produitPrixReduction = resultats.getDouble(4);
                 int produitQteReduction = resultats.getInt(5);
-                String produitImage = resultats.getString(2);
+                String produitImage = resultats.getString(6);
                 //instancier un objet de Produit avec ces 3 champs en paramètres
                 produit = new Produit(produitId, produitNom, produitPrix, produitPrixReduction, produitQteReduction, produitImage);
             }
@@ -129,40 +129,7 @@ public class ProduitDaoImpl implements ProduitDao {
         return produit;
     }
 
-    /**
-     * Permet de chercher et récupérer un objet de Produit dans la base de données via un string en paramètre
-     * @param : nom
-     * @return : objet de classe Produit cherché et retourné
-     */
-    public Produit chercher(String search)  {
-        Produit produit = null;
-        try {
-            // connexion
-            Connection connexion = daoFactory.getConnection();
-            Statement statement = connexion.createStatement();
 
-            // récupération des produits de la base de données avec la requete SELECT
-            ResultSet resultats = statement.executeQuery("select * from Produit where Nom like '%" + search + "%'");
-
-            // 	Se déplacer sur le prochain enregistrement : retourne false si la fin est atteinte
-            if (resultats.next()) {
-                // récupérer les 3 champs de la table produits dans la base de données
-                int produitId = resultats.getInt(1);
-                String produitNom = resultats.getString(2);
-                double produitPrix = resultats.getDouble(3);
-                double produitPrixReduction = resultats.getDouble(4);
-                int produitQteReduction = resultats.getInt(5);
-                String produitImage = resultats.getString(2);
-                //instancier un objet de Produit avec ces 3 champs en paramètres
-                produit = new Produit(produitId, produitNom, produitPrix, produitPrixReduction, produitQteReduction, produitImage);
-            }
-        } catch (SQLException e) {
-            //traitement de l'exception
-            e.printStackTrace();
-            System.out.println("Produit non trouvé");
-        }
-        return produit;
-    }
 
 
     /**

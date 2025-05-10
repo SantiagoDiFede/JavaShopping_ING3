@@ -157,6 +157,26 @@ public class CommandeLigneDaoImpl implements CommandeLigneDao {
         return commandeLigne;
     }
 
+    /**
+     * Mettre à jour la quantité d'une commande ligne
+     * @param commandeLigneId ID de la commande ligne à mettre à jour
+     * @param qte Nouvelle quantité
+     */
+    public void updateQte(int commandeLigneId, int qte) {
+        try {
+            // connexion
+            Connection connexion = daoFactory.getConnection();
+            PreparedStatement preparedStatement = connexion.prepareStatement(
+                    "UPDATE CommandeLigne SET Qte = ? WHERE CommandeLigneID = ?");
+
+            preparedStatement.setInt(1, qte);
+            preparedStatement.setInt(2, commandeLigneId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Modification de la quantité de la commande ligne impossible");
+        }
+    }
     @Override
     /**
      * Supprimer un objet de la classe Commande en paramètre dans la base de données en respectant la contrainte

@@ -17,9 +17,9 @@ public class Main extends Application {
     public void start(@NotNull Stage stage) throws Exception {
 
         DaoFactory daoFactory = DaoFactory.getInstance("shoppingjava", "root", "");
-
-        ConnexionControlleur controller = new ConnexionControlleur(daoFactory);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+        ConnexionControlleur controller = new ConnexionControlleur(daoFactory);
+
         loader.setController(controller);
         Parent root = loader.load();
 

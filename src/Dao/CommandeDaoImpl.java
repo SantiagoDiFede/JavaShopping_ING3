@@ -233,9 +233,9 @@ public ArrayList<Commande> getCommandesUtilisateur(int utilisateurId) {
             // connexion
             Connection connexion = daoFactory.getConnection();
 
-            //Selectionner la dernière commande de l' utilisateur
+            //Selectionner la dernière commande de l' utilisateur avec le statut "En cours"
             PreparedStatement preparedStatement = connexion.prepareStatement(
-                    "SELECT * FROM Commande WHERE UtilisateurID = ? ORDER BY CommandeID DESC LIMIT 1");
+                    "SELECT * FROM Commande WHERE UtilisateurID = ? and  StatutCommande = 'En cours' ORDER BY CommandeID DESC LIMIT 1");
             preparedStatement.setInt(1, utilisateurId);
 
             ResultSet resultats = preparedStatement.executeQuery();
