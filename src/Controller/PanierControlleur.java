@@ -29,6 +29,8 @@ public class PanierControlleur {
     private Utilisateur utilisateurConnecte;
     private Utilisateur utilisateur;
 
+    double totalGeneral = 0.0;
+
     @FXML
     private VBox produitsContainer;
 
@@ -248,7 +250,7 @@ public class PanierControlleur {
      * @param lignes Liste des lignes de commande
      */
     private void mettreAJourTotal(List<CommandeLigne> lignes) {
-        double totalGeneral = 0.0;
+        totalGeneral = 0.0;
         for (CommandeLigne ligne : lignes) {
             Produit produit = produitDao.chercher(ligne.getProduitId());
 
@@ -291,6 +293,7 @@ public class PanierControlleur {
                 return;
             }
             panier.setStatutCommande("Payé");
+            panier.setPrixTotal(totalGeneral);
             commandeDao.modifier(panier);
             System.out.println("Panier payé !");
             retourMagasin();

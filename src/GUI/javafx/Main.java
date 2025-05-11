@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
+import java.net.URL;
 import java.util.Objects;
 
 
@@ -19,6 +20,8 @@ public class Main extends Application {
         DaoFactory daoFactory = DaoFactory.getInstance("shoppingjava", "root", "");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
         ConnexionControlleur controller = new ConnexionControlleur(daoFactory);
+        URL fxmlUrl = getClass().getResource("/login.fxml");
+        System.out.println("FXML location: " + fxmlUrl);
 
         loader.setController(controller);
         Parent root = loader.load();
