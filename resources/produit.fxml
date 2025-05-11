@@ -30,6 +30,12 @@
                 <Label text="Prix :" />
                 <TextField fx:id="champPrix" />
 
+                <Label text="Prix de réduction :" />
+                <TextField fx:id="champPrixReduction" />
+
+                <Label text="Quantité pour réduction :" />
+                <TextField fx:id="champQteReduction" />
+
                 <Label text="Image (URL ou chemin relatif) :" />
                 <TextField fx:id="champImage" />
 

@@ -47,7 +47,7 @@ public class ConnexionControlleur {
     }
 
     @FXML
-    private TextField loginField;
+    private TextField mailField;
 
     @FXML
     private PasswordField passwordField;
@@ -84,20 +84,20 @@ public class ConnexionControlleur {
      *
      */
     public void inscription() {
-        String email = signupEmailField.getText();
+        String mail = signupEmailField.getText();
         String name = signupNameField.getText();
         String login = signupLoginField.getText();
         String password = signupPasswordField.getText();
 
         // Vérifier si l'utilisateur existe déjà
-        Utilisateur utilisateurExistant = utilisateurDao.chercher(login);
+        Utilisateur utilisateurExistant = utilisateurDao.chercher(mail);
 
         if (utilisateurExistant != null) {
             System.out.println("L'utilisateur existe déjà.");
             return;
         }
         // Créer un nouvel utilisateur
-        Utilisateur nouvelUtilisateur = new Utilisateur(login, password, name,email , false);
+        Utilisateur nouvelUtilisateur = new Utilisateur(login, password, name,mail , false);
         utilisateurDao.ajouter(nouvelUtilisateur);
         System.out.println("Inscription réussie de " + login);
         allerMagasin(daoFactory, nouvelUtilisateur);
@@ -110,12 +110,12 @@ public class ConnexionControlleur {
      * 
      */
     public void connexion() {
-        String login = loginField.getText();
+        String mail = mailField.getText();
         String password = passwordField.getText();
 
-        Utilisateur utilisateur = utilisateurDao.chercher(login);
+        Utilisateur utilisateur = utilisateurDao.chercher(mail);
         if (utilisateur != null && utilisateur.getutilisateurPassword().equals(password)) {
-            System.out.println("Connexion réussie de " + login);
+            System.out.println("Connexion réussie de " + mail);
             utilisateurConnecte = utilisateur;
             allerMagasin(daoFactory, utilisateur);
         } else {

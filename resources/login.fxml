@@ -32,12 +32,12 @@
                            <children>
                               <HBox prefHeight="45.0" prefWidth="453.0">
                                  <children>
-                                    <Label alignment="TOP_LEFT" prefHeight="45.0" prefWidth="168.0" text="Login">
+                                    <Label alignment="TOP_LEFT" prefHeight="45.0" prefWidth="168.0" text="Mail">
                                        <font>
                                           <Font name="System Bold" size="21.0" />
                                        </font>
                                     </Label>
-                                    <TextField  fx:id="loginField" prefHeight="25.0" prefWidth="238.0" />
+                                    <TextField  fx:id="mailField" prefHeight="25.0" prefWidth="238.0" />
                                  </children>
                               </HBox>
                            </children>

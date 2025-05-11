@@ -76,7 +76,7 @@ public class MagasinControlleur {
 
         int column = 0;
         int row = 0;
-        int maxColumns = 3; // nombre de colonnes par ligne
+        int maxColumns = 6; // nombre de colonnes par ligne
 
         for (Produit produit : produits) {
             // Image
@@ -122,7 +122,7 @@ public class MagasinControlleur {
             ProduitControlleur controller = loader.getController();
             controller.initData(daoFactory, utilisateur,produit); // injecte les données après le load
             Stage currentStage = (Stage) produitsContainer.getScene().getWindow(); // ou un autre bouton/label
-            currentStage.setScene(new Scene(root));
+            currentStage.setScene(new Scene(root, 800, 600));
             currentStage.setTitle("Page du produit");
             currentStage.show();
         } catch (IOException e) {

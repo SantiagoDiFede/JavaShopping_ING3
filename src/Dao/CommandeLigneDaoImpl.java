@@ -203,4 +203,24 @@ public class CommandeLigneDaoImpl implements CommandeLigneDao {
         }
 
     }
+
+    public int ventesTotal(int produitId) {
+        try {
+            // connexion
+            Connection connexion = daoFactory.getConnection();
+            PreparedStatement preparedStatement = connexion.prepareStatement(
+                "SELECT SUM(Qte) FROM CommandeLigne WHERE ProduitID = ?");
+            preparedStatement.setInt(1, produitId);
+
+            // Exécution de la requête SELECT pour récupérer le total des ventes
+            ResultSet resultats = preparedStatement.executeQuery();
+            if (resultats.next()) {
+                return resultats.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Erreur lors de la récupération du total des ventes");
+        }
+        return 0;
+    }
 }

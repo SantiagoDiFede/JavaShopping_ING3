@@ -34,6 +34,8 @@ public class ProduitControlleur {
 
     @FXML private TextField champNom;
     @FXML private TextField champPrix;
+    @FXML private TextField champPrixReduction;
+    @FXML private TextField champQteReduction;
     @FXML private TextField champImage;
 
     @FXML private Button btnSupprimer;
@@ -60,6 +62,8 @@ public class ProduitControlleur {
             adminSection.setVisible(true);
             champNom.setText(produit.getNom());
             champPrix.setText(String.valueOf(produit.getPrix()));
+            champPrixReduction.setText(String.valueOf(produit.getPrixReduction()));
+            champQteReduction.setText(String.valueOf(produit.getQteReduction()));
             champImage.setText(produit.getImage());
         }
     }
@@ -72,7 +76,9 @@ public class ProduitControlleur {
                     List< CommandeLigne> commandeLignes = commandeLigneDao.getAllFromCommande(commande.getCommandeId());
                     for (CommandeLigne commandeLigne : commandeLignes) {
                         if (commandeLigne.getProduitId() == produit.getProduitId()) {
-                            System.out.println("Produit déjà dans le panier !");
+                            commandeLigne.setQte(commandeLigne.getQte() + 1);
+                            commandeLigneDao.modifier(commandeLigne);
+                            System.out.println("Produit déjà dans le panier, quantité augmentée !");
                             return;
                         }
                     }
@@ -108,7 +114,7 @@ public class ProduitControlleur {
 
     private void modifierProduit() {
         try {
-            produitDao.modifier(new Produit(produit.getProduitId(), champNom.getText(), Double.parseDouble(champPrix.getText()), produit.getPrixReduction(), produit.getQteReduction(), champImage.getText()));
+            produitDao.modifier(new Produit(produit.getProduitId(), champNom.getText(), Double.parseDouble(champPrix.getText()),Double.parseDouble(champPrixReduction.getText()), Integer.parseInt(champQteReduction.getText()), champImage.getText()));
         } catch (Exception e) {
             System.out.println("Erreur lors de la modification : " + e.getMessage());
         }

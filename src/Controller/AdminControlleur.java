@@ -1,9 +1,8 @@
 package Controller;
 
-import Dao.CommandeDaoImpl;
-import Dao.DaoFactory;
-import Dao.UtilisateurDaoImpl;
+import Dao.*;
 import Model.Commande;
+import Model.Produit;
 import Model.Utilisateur;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +15,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,6 +30,8 @@ public class AdminControlleur {
     private DaoFactory daoFactory;
     private UtilisateurDaoImpl utilisateurDao;
     private CommandeDaoImpl commandeDao;
+    private CommandeLigneDaoImpl commandeLigneDao;
+    private ProduitDaoImpl produitDao;
     private Utilisateur utilisateurConnecte;
     private CompteControlleur compteControlleur;
     @FXML
@@ -35,6 +39,12 @@ public class AdminControlleur {
 
     @FXML
     private VBox clientsContainer;
+
+    @FXML private VBox produitsContainer;
+    @FXML private Button ajouterProduitButton;
+
+    @FXML private Label ventesTotalesLabel;
+    @FXML private VBox ventesParProduitContainer;
 
 
     /**
@@ -65,10 +75,15 @@ public class AdminControlleur {
         this.utilisateurConnecte = utilisateur;
         this.utilisateurDao = new UtilisateurDaoImpl(daoFactory);
         this.commandeDao = new CommandeDaoImpl(daoFactory);
+        this.commandeLigneDao = new CommandeLigneDaoImpl(daoFactory);
+        this.produitDao = new ProduitDaoImpl(daoFactory);
         List<Commande> commandes = commandeDao.getAll();
         setCommandes(commandes);
         List<Utilisateur> clients = utilisateurDao.getAll();
         setClients(clients);
+        List<Produit> produits = produitDao.getAll();
+        setProduits(produits);
+        afficherStatistiques(produits);
     }
 
     public void setCommandes(List<Commande> commandes) {
@@ -91,7 +106,7 @@ public class AdminControlleur {
             commandeBox.setPadding(new Insets(5));
 
             Label label = new Label("#" + commandeNumero--);
-            Button btn = new Button("Facture");
+            Button btn = new Button("Facture de l'utilisateur n°" + commande.getUtilisateurId());
             btn.setOnAction(e -> afficherFacture(commande.getCommandeId()));
 
             commandeBox.getChildren().addAll(label, btn);
@@ -122,7 +137,11 @@ public class AdminControlleur {
             clientBox.setAlignment(Pos.CENTER_LEFT);
             clientBox.setPadding(new Insets(10, 0, 10, 50));
 
-            Label idLabel = new Label("-ID_" + client.getUtilisateurId());
+            clientBox.setOnMouseClicked(event -> {
+                ouvrirProfilClient(client); // Méthode à créer
+            });
+
+            Label idLabel = new Label("ID_" + client.getUtilisateurId() + " : " + client.getutilisateurName());
             Button deleteBtn = new Button();
             ImageView icon = new ImageView(new Image(getClass().getResource("/icons8-close-50.png").toExternalForm()));
             icon.setFitHeight(22);
@@ -137,6 +156,112 @@ public class AdminControlleur {
 
             clientBox.getChildren().addAll(idLabel, deleteBtn);
             clientsContainer.getChildren().add(clientBox);
+        }
+    }
+
+    public void setProduits(List<Produit> produits) {
+        produitsContainer.getChildren().clear();
+
+        for (Produit produit : produits) {
+            HBox produitBox = new HBox(20);
+            produitBox.setAlignment(Pos.CENTER_LEFT);
+            produitBox.setPadding(new Insets(5, 10, 5, 10));
+            produitBox.setStyle("-fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
+
+            Label nomLabel = new Label("- " + produit.getNom() + " (prix unitaire) : ");
+            Label prixLabel = new Label(produit.getPrix() + "€");
+
+            Button deleteBtn = new Button();
+            ImageView icon = new ImageView(new Image(getClass().getResource("/icons8-close-50.png").toExternalForm()));
+            icon.setFitHeight(16);
+            icon.setFitWidth(16);
+            deleteBtn.setGraphic(icon);
+            deleteBtn.setOnAction(e -> supprimerProduit(produit.getProduitId()));
+
+            Region spacer = new Region();
+            HBox.setHgrow(spacer, Priority.ALWAYS);
+
+            produitBox.getChildren().addAll(nomLabel, prixLabel, spacer, deleteBtn);
+            produitsContainer.getChildren().add(produitBox);
+        }
+    }
+
+    private void ouvrirProfilClient(Utilisateur utilisateur) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/account.fxml"));
+                Parent root = loader.load();
+                CompteControlleur controller = loader.getController();
+                controller.initData(daoFactory, utilisateurConnecte, utilisateur); // injecte les données après le load
+                Stage currentStage = (Stage) produitsContainer.getScene().getWindow(); // ou un autre bouton/label
+                currentStage.setScene(new Scene(root));
+                currentStage.setTitle("Page du compte");
+                currentStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+
+
+    @FXML
+    private void ajouterProduit() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterProduit.fxml"));
+            Parent root = loader.load();
+
+            AjouterProduitControlleur popupController = loader.getController();
+            popupController.setAdminController(this);
+
+            Stage popup = new Stage();
+            popup.setTitle("Ajouter un Produit");
+            popup.setScene(new Scene(root));
+            popup.initModality(Modality.APPLICATION_MODAL);
+            popup.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ajouterProduitDepuisPopup(Produit produit) {
+        System.out.println("Produit ajouté : " + produit.getNom());
+
+        produitDao.ajouter(produit); // ou depuis une base
+        setProduits(produitDao.getAll()); // Recharge l'affichage
+    }
+
+    private void supprimerProduit(int produitId) {
+        produitDao.supprimer(produitId);
+        setProduits(produitDao.getAll());
+    }
+
+
+    public void afficherStatistiques(List<Produit> produits) {
+        double total = 0;
+        for (Produit p : produits) {
+            total = total + (p.getPrix() * commandeLigneDao.ventesTotal(p.getProduitId()));
+        }
+        ventesTotalesLabel.setText("Ventes totales : " + total + " €");
+
+        ventesParProduitContainer.getChildren().clear();
+        for (Produit p : produits) {
+            Label label = new Label(p.getNom() + " : " + commandeLigneDao.ventesTotal(p.getProduitId()) + " ventes pour un total de " + (p.getPrix() * commandeLigneDao.ventesTotal(p.getProduitId())) + " €");
+            ventesParProduitContainer.getChildren().add(label);
+        }
+    }
+
+    @FXML
+    private void retourMagasin() {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/shop.fxml"));
+            Parent root = loader.load();
+            MagasinControlleur controller = loader.getController();
+            controller.initData(daoFactory, utilisateurConnecte); // injecte les données après le load
+            Stage currentStage = (Stage) commandesContainer.getScene().getWindow(); // ou un autre bouton/label
+            currentStage.setScene(new Scene(root));
+            currentStage.setTitle("Page du magasin");
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

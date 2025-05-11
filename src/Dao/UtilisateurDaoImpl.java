@@ -141,7 +141,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             
             // Préparation de la requête avec un paramètre
             PreparedStatement preparedStatement = connexion.prepareStatement(
-                "SELECT * FROM Utilisateur WHERE Login = ?");
+                "SELECT * FROM Utilisateur WHERE Mail = ?");
             preparedStatement.setString(1, search);
 
             //récupération des utilisateurs de la base de données avec la requete SELECT
