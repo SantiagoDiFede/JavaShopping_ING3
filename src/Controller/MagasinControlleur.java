@@ -36,6 +36,10 @@ public class MagasinControlleur {
     @FXML private Label panierLabel;
 
 
+    /**
+     * Constructeur par défaut
+     * Nécessaire pour JavaFX
+     */
     public MagasinControlleur() {
         // JavaFX a besoin de ce constructeur pour charger le FXML
     }
@@ -53,6 +57,11 @@ public class MagasinControlleur {
     }
 
 
+    /**
+     * Initialise le contrôleur de la page magasin
+     * @param daoFactory Factory pour accéder aux DAO
+     * @param utilisateur Utilisateur connecté
+     */
     public void initData(DaoFactory daoFactory, Utilisateur utilisateur) {
         this.daoFactory = daoFactory;
         this.utilisateurConnecte = utilisateur;
@@ -65,6 +74,9 @@ public class MagasinControlleur {
     }
 
 
+    /**
+     * Affiche les produits dans le conteneur
+     */
     public void afficherProduits() {
         if (produitsContainer == null) {
             System.out.println("produitsContainer est null !");
@@ -115,6 +127,12 @@ public class MagasinControlleur {
         }
     }
 
+    /**
+     * Ouvre la page du produit
+     * @param daoFactory Factory pour accéder aux DAO
+     * @param utilisateur Utilisateur connecté
+     * @param produit Produit à afficher
+     */
     public void allerPageProduit(DaoFactory daoFactory, Utilisateur utilisateur, Produit produit) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/produit.fxml"));
@@ -130,6 +148,9 @@ public class MagasinControlleur {
         }
     }
 
+    /**
+     * Accède à la page de l'administrateur
+     */
     @FXML
     private void allerCompte() {
         try {
@@ -147,6 +168,9 @@ public class MagasinControlleur {
 
     }
 
+    /**
+     * Accède à la page du panier
+     */
     @FXML
     private void allerPanier() {
         try {
@@ -163,6 +187,9 @@ public class MagasinControlleur {
         }
     }
 
+    /**
+     * Accède à la page de l'administrateur
+     */
     @FXML
     private void allerAdmin() {
         try {

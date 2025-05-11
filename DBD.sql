@@ -77,3 +77,8 @@ INSERT INTO `produit` (`ProduitID`, `Nom`, `Prix`, `PrixReduction`, `QteReductio
 INSERT INTO `produit` (`ProduitID`, `Nom`, `Prix`, `PrixReduction`, `QteReduction`, `Image`) VALUES (NULL, 'jouet voiture', 299.99, 249.99, 2, 'toycar.jpeg');
 INSERT INTO `produit` (`ProduitID`, `Nom`, `Prix`, `PrixReduction`, `QteReduction`, `Image`) VALUES (NULL, 'allumettes', 0.99, 0.49, 200, 'allumettes.jpg');
 INSERT INTO `produit` (`ProduitID`, `Nom`, `Prix`, `PrixReduction`, `QteReduction`, `Image`) VALUES (NULL, 'Pelle', 60.00, 30.00, 6, 'pelle.jpg');
+
+
+INSERT INTO `commande` (`CommandeID`, `UtilisateurID`, `PrixTotal`, `StatutCommande`) VALUES (NULL, 3, 0, 'En cours');
+INSERT INTO `commandeligne` (`CommandeLigneID`, `CommandeID`, `ProduitID`, `Qte`) VALUES (NULL, 1, 1, 2);
+INSERT INTO `commandeligne` (`CommandeLigneID`, `CommandeID`, `ProduitID`, `Qte`) VALUES (NULL, 1, 2, 1);

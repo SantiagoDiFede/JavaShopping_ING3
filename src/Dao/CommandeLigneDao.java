@@ -42,7 +42,13 @@ public interface CommandeLigneDao {
      */
     public void supprimer (int commandeLigneId);
 
-    public void updateQte(int commandeLigneId, int qte); // Mettre à jour la quantité d'une commande ligne
+
+    /**
+     * mets à jour la quantité d'une commande ligne
+     * @param commandeLigneId
+     * @param qte
+     */
+    public void updateQte(int commandeLigneId, int qte);
 
 }
 

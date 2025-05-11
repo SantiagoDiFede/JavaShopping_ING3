@@ -86,6 +86,10 @@ public class AdminControlleur {
         afficherStatistiques(produits);
     }
 
+    /**
+     * Méthode pour afficher les commandes
+     * @param commandes Liste des commandes à afficher
+     */
     public void setCommandes(List<Commande> commandes) {
         commandesContainer.getChildren().clear();
 
@@ -114,6 +118,10 @@ public class AdminControlleur {
         }
     }
 
+    /**
+     * Méthode pour afficher la facture d'une commande
+     * @param commandeId ID de la commande
+     */
     public void afficherFacture(int commandeId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/payment.fxml"));
@@ -129,6 +137,10 @@ public class AdminControlleur {
         }
     }
 
+    /**
+     * Méthode pour afficher les clients
+     * @param clients Liste des clients à afficher
+     */
     public void setClients(List<Utilisateur> clients) {
         clientsContainer.getChildren().clear();
 
@@ -159,6 +171,10 @@ public class AdminControlleur {
         }
     }
 
+    /**
+     * Méthode pour afficher les produits
+     * @param produits Liste des produits à afficher
+     */
     public void setProduits(List<Produit> produits) {
         produitsContainer.getChildren().clear();
 
@@ -186,6 +202,10 @@ public class AdminControlleur {
         }
     }
 
+    /**
+     * Méthode pour ouvrir le profil d'un client
+     * @param utilisateur Utilisateur à afficher
+     */
     private void ouvrirProfilClient(Utilisateur utilisateur) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/account.fxml"));
@@ -203,6 +223,9 @@ public class AdminControlleur {
 
 
 
+    /**
+     * Méthode pour ouvrir la page d'ajout de produit
+     */
     @FXML
     private void ajouterProduit() {
         try {
@@ -222,6 +245,10 @@ public class AdminControlleur {
         }
     }
 
+    /**
+     * Méthode pour ajouter un produit depuis la popup
+     * @param produit Produit à ajouter
+     */
     public void ajouterProduitDepuisPopup(Produit produit) {
         System.out.println("Produit ajouté : " + produit.getNom());
 
@@ -229,12 +256,19 @@ public class AdminControlleur {
         setProduits(produitDao.getAll()); // Recharge l'affichage
     }
 
+    /**
+     * Méthode pour supprimer un produit
+     * @param produitId ID du produit à supprimer
+     */
     private void supprimerProduit(int produitId) {
         produitDao.supprimer(produitId);
         setProduits(produitDao.getAll());
     }
 
-
+    /**
+     * Méthode pour afficher les statistiques de vente
+     * @param produits Liste des produits à afficher
+     */
     public void afficherStatistiques(List<Produit> produits) {
         double total = 0;
         for (Produit p : produits) {
@@ -249,6 +283,9 @@ public class AdminControlleur {
         }
     }
 
+    /**
+     * Méthode pour retourner au magasin
+     */
     @FXML
     private void retourMagasin() {
         try{

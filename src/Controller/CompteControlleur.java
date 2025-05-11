@@ -52,11 +52,22 @@ public class CompteControlleur {
     private Button retourMagasinButton;
 
 
+    /**
+     * Constructeur par défaut
+     * Nécessaire pour JavaFX
+     */
     public CompteControlleur() {
         // JavaFX a besoin de ce constructeur pour charger le FXML
     }
 
 
+    /**
+     * Initialise le contrôleur avec les données nécessaires
+     *
+     * @param daoFactory         La fabrique de DAO
+     * @param utilisateurConnecte L'utilisateur connecté
+     * @param utilisateurCompte  L'utilisateur dont on veut afficher le compte
+     */
     public void initData(DaoFactory daoFactory, Utilisateur utilisateurConnecte, Utilisateur utilisateurCompte) {
         this.daoFactory = daoFactory;
         this.utilisateurConnecte = utilisateurConnecte;
@@ -71,6 +82,10 @@ public class CompteControlleur {
 
     }
 
+    /**
+     * Initialise le contrôleur
+     * Nécessaire pour JavaFX
+     */
     @FXML
     public void initialize() {
         modifierButton.setOnAction(e -> ModifierCompte());
@@ -113,6 +128,9 @@ public class CompteControlleur {
         }
     }
 
+    /**
+     * Déconnexion de l'utilisateur
+     */
     public void Deconnexion() {
         try {
             //Vérifier que l'utilisateur est connecté
@@ -160,6 +178,11 @@ public class CompteControlleur {
     @FXML
     private VBox commandesContainer;
 
+    /**
+     * Affiche les commandes de l'utilisateur
+     *
+     * @param commandes La liste des commandes à afficher
+     */
     public void setCommandes(List<Commande> commandes) {
         commandesContainer.getChildren().clear(); // reset l'affichage
 

@@ -50,10 +50,18 @@ public class PanierControlleur {
     private VBox paying;
     
 
+    /**
+     * Constructeur par défaut
+     * Nécessaire pour JavaFX
+     */
     public PanierControlleur() {
 
     }
 
+    /**
+     * Constructeur du contrôleur de panier
+     * @param daoFactory Factory pour accéder aux DAO
+     */
     public void initData(DaoFactory daoFactory, Utilisateur utilisateurConnecte, Utilisateur utilisateur, int commandeId) {
         this.daoFactory = daoFactory;
         this.commandeDao = new CommandeDaoImpl(daoFactory);
@@ -66,17 +74,26 @@ public class PanierControlleur {
 
     }
 
-    public void initData(DaoFactory daoFactory, Utilisateur utilisateurConnecte, Utilisateur utilisateurConnecte1) {
+    /**
+     * Initialise le contrôleur de la page panier
+     * @param daoFactory Factory pour accéder aux DAO
+     * @param utilisateurConnecte Utilisateur connecté
+     * @param utilisateur Utilisateur dont on veut afficher le panier
+     */
+    public void initData(DaoFactory daoFactory, Utilisateur utilisateurConnecte, Utilisateur utilisateur) {
         this.daoFactory = daoFactory;
         this.commandeDao = new CommandeDaoImpl(daoFactory);
         this.commandeLigneDao = new CommandeLigneDaoImpl(daoFactory);
         this.produitDao = new ProduitDaoImpl(daoFactory);
         this.utilisateurConnecte = utilisateurConnecte;
-        this.utilisateur = utilisateurConnecte1;
+        this.utilisateur = utilisateur;
         afficherPanierEnCours();
         paying.setVisible(true);
     }
 
+    /**
+     * Affiche le panier en cours de l'utilisateur
+     */
     public void afficherPanierEnCours() {
         Commande panier = commandeDao.getLastCommande(utilisateur.getUtilisateurId());
         if (panier == null) return;
@@ -157,6 +174,11 @@ public class PanierControlleur {
         mettreAJourTotal(lignes);
     }
 
+
+    /**
+     * Affiche le panier d'une commande spécifique
+     * @param commandeId ID de la commande à afficher
+     */
     public void afficherPanier(int commandeId) {
         Commande panier = commandeDao.chercher(commandeId);
         if (panier == null) return;
@@ -220,6 +242,11 @@ public class PanierControlleur {
         mettreAJourTotal(lignes);
     }
 
+
+    /**
+     * Met à jour le total du panier
+     * @param lignes Liste des lignes de commande
+     */
     private void mettreAJourTotal(List<CommandeLigne> lignes) {
         double totalGeneral = 0.0;
         for (CommandeLigne ligne : lignes) {
@@ -239,6 +266,10 @@ public class PanierControlleur {
         prixTotalLabel.setText("TOTAL : " + String.format("%.2f", totalGeneral) + " €");
     }
 
+
+    /**
+     * Rafraîchit le panier en cours
+     */
     private void rafraichirPanier() {
         afficherPanierEnCours();
     }
@@ -266,6 +297,9 @@ public class PanierControlleur {
         }
     }
 
+    /**
+     * Retourne à la page du magasin
+     */
     @FXML
     private void retourMagasin() {
         try{

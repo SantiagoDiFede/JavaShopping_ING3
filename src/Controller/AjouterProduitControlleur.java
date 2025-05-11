@@ -15,16 +15,27 @@ public class AjouterProduitControlleur {
 
     private AdminControlleur adminController;
 
+
+    /**
+     * Initialise le contrôleur.
+     */
     public void setAdminController(AdminControlleur controller) {
         this.adminController = controller;
     }
 
+    /**
+     * annule l'ajout du produit et ferme la fenêtre.
+     */
     @FXML
     private void annuler() {
         Stage stage = (Stage) nomField.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Ajoute un produit avec les informations fournies dans les champs de texte.
+     * Ferme la fenêtre après l'ajout.
+     */
     @FXML
     private void ajouter() {
         String nom = nomField.getText();

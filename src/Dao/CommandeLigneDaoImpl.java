@@ -204,6 +204,11 @@ public class CommandeLigneDaoImpl implements CommandeLigneDao {
 
     }
 
+    /**
+     * Récupère le total des ventes d'un produit spécifique
+     * @param produitId ID du produit dont on veut récupérer le total des ventes
+     * @return Total des ventes du produit
+     */
     public int ventesTotal(int produitId) {
         try {
             // connexion

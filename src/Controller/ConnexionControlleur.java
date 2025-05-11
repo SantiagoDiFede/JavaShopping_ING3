@@ -71,6 +71,11 @@ public class ConnexionControlleur {
     @FXML
     private Button signupButton;
 
+
+    /**
+     * Initialise le contrôleur
+     * Définit les actions des boutons de connexion et d'inscription
+     */
     @FXML
     public void initialize() {
         loginButton.setOnAction(event -> connexion());
@@ -134,6 +139,13 @@ public class ConnexionControlleur {
         return utilisateur != null && utilisateur.isAdmin();
     }
 
+
+    /**
+     *
+     * Récupère l'utilisateur actuellement connecté
+     * @return L'utilisateur connecté ou null si aucun utilisateur n'est connecté
+     *
+     */
     public Utilisateur getUtilisateurConnecte() {
         return utilisateurConnecte;
     }
@@ -155,6 +167,13 @@ public class ConnexionControlleur {
         }
     }
 
+    /**
+     *
+     * Ouvre la page du magasin
+     * @param daoFactory Factory pour accéder aux DAO
+     * @param utilisateur L'utilisateur connecté
+     *
+     */
     public void  allerMagasin(DaoFactory daoFactory, Utilisateur utilisateur) {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/shop.fxml"));

@@ -48,7 +48,13 @@ public interface CommandeDao {
  */
     public ArrayList<Commande> getCommandesUtilisateur(int utilisateurId);
 
-    public Commande getLastCommande(int utilisateurId); // Récupérer la dernière commande de l'utilisateur
+
+    /**
+     * Récupère la dernière commande d'un utilisateur
+     * @param utilisateurId
+     * @return
+     */
+    public Commande getLastCommande(int utilisateurId);
 
 
 }

@@ -49,6 +49,10 @@ public class ProduitControlleur {
 
     private Produit produit;
 
+
+    /**
+     * Initialise le contrôleur avec les données nécessaires.
+     */
     public void initData(DaoFactory daoFactory, Utilisateur utilisateur, Produit produit) {
         this.daoFactory = daoFactory;
         this.utilisateurConnecte = utilisateur;
@@ -68,6 +72,10 @@ public class ProduitControlleur {
         }
     }
 
+    /**
+     * Ajoute le produit au panier de l'utilisateur connecté.
+     * @throws InterruptedException
+     */
     @FXML
     private void ajouterAuPanier() throws InterruptedException {
         List<Commande> commandes = commandeDao.getCommandesUtilisateur(utilisateurConnecte.getUtilisateurId());
@@ -97,13 +105,20 @@ public class ProduitControlleur {
         }
 
 
-
+    /**
+     * initialise les boutons de la page produit
+     */
     @FXML
     public void initialize() {
         btnSupprimer.setOnAction(e -> supprimerProduit());
         btnModifier.setOnAction(e -> modifierProduit());
     }
 
+
+
+    /**
+     * Supprime le produit de la base de données.
+     */
     private void supprimerProduit() {
         if (produit != null && utilisateurConnecte.isAdmin()) {
             produitDao.supprimer(produit.getProduitId());
@@ -112,6 +127,9 @@ public class ProduitControlleur {
         }
     }
 
+    /**
+     * Modifie le produit dans la base de données.
+     */
     private void modifierProduit() {
         try {
             produitDao.modifier(new Produit(produit.getProduitId(), champNom.getText(), Double.parseDouble(champPrix.getText()),Double.parseDouble(champPrixReduction.getText()), Integer.parseInt(champQteReduction.getText()), champImage.getText()));
@@ -120,6 +138,9 @@ public class ProduitControlleur {
         }
     }
 
+    /**
+     * Retourne à la page du magasin.
+     */
     @FXML
     private void retourMagasin() {
         try{
@@ -137,6 +158,9 @@ public class ProduitControlleur {
     }
 
 
+    /**
+     * Affiche les informations du produit dans la vue.
+     */
     private void afficherProduit() {
         Image image = new Image(getClass().getResource("/" + produit.getImage()).toExternalForm(), 150, 150, true, true); // largeur, hauteur
         imageProduit.setImage(image);
