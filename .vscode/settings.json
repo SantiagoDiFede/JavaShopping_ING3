@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "C:\\Users\\jeanb\\OneDrive\\ING3\\ECE\\POO Java\\Projet_JavaShopping\\JavaShopping_ING3\\lib\\mysql-connector-j-9.2.0.jar"
+    ]
+}
